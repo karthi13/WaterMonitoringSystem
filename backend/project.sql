@@ -85,4 +85,160 @@ CREATE TABLE `water_reporter`.`extra_water_consumption` (
   PRIMARY KEY (`extra_water_comsumption_id`));
 
 /*******************************************************************************/
-/******** Added Database Created the tables ***********************************/ 
+/******** Added Database Created the tables ***********************************/
+
+/** ALTER queries**/
+ALTER TABLE `water_reporter`.`users` 
+ADD INDEX `locality_id_idx` (`locality_id` ASC) VISIBLE,
+ADD INDEX `user_role_id_idx` (`user_role_id` ASC) VISIBLE;
+;
+ALTER TABLE `water_reporter`.`users` 
+ADD CONSTRAINT `locality_id`
+  FOREIGN KEY (`locality_id`)
+  REFERENCES `water_reporter`.`locality` (`locality_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `user_role_id`
+  FOREIGN KEY (`user_role_id`)
+  REFERENCES `water_reporter`.`user_roles` (`user_role_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+/*-------------------------------*/
+
+  ALTER TABLE `water_reporter`.`locality` 
+ADD INDEX `municipality_idx` (`municipality_id` ASC) VISIBLE;
+;
+ALTER TABLE `water_reporter`.`locality` 
+ADD CONSTRAINT `municipality`
+  FOREIGN KEY (`municipality_id`)
+  REFERENCES `water_reporter`.`municipalities` (`municipality_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+/****/
+ALTER TABLE `water_reporter`.`user_water_measurements` 
+ADD INDEX `user_id_uwm_idx` (`user_id` ASC) VISIBLE,
+ADD INDEX `locality_id_uwm_idx` (`locality_id` ASC) VISIBLE;
+;
+ALTER TABLE `water_reporter`.`user_water_measurements` 
+ADD CONSTRAINT `user_id_uwm_idx`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `water_reporter`.`users` (`user_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `locality_id_uwm_idx`
+  FOREIGN KEY (`locality_id`)
+  REFERENCES `water_reporter`.`locality` (`locality_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+
+/******/
+
+ALTER TABLE `water_reporter`.`invoice` 
+ADD INDEX `user_id_inv_idx_idx` (`user_id` ASC) VISIBLE;
+;
+ALTER TABLE `water_reporter`.`invoice` 
+ADD CONSTRAINT `user_id_inv_idx`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `water_reporter`.`users` (`user_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+/*******/
+
+ALTER TABLE `water_reporter`.`user_roles` 
+CHANGE COLUMN `user_id` `user_id` INT(11) NOT NULL ,
+CHANGE COLUMN `role_id` `role_id` INT(11) NOT NULL ,
+ADD INDEX `user_id_url_idx` (`user_id` ASC) VISIBLE;
+;
+ALTER TABLE `water_reporter`.`user_roles` 
+ADD CONSTRAINT `user_id_url`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `water_reporter`.`users` (`first_ name`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+  /*******/
+ALTER TABLE `water_reporter`.`user_roles` 
+ADD CONSTRAINT `user_id_ur`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `water_reporter`.`users` (`user_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+
+/*****/
+ALTER TABLE `water_reporter`.`user_roles` 
+ADD INDEX `role_id_ur_idx` (`role_id` ASC) VISIBLE;
+;
+ALTER TABLE `water_reporter`.`user_roles` 
+ADD CONSTRAINT `role_id_ur`
+  FOREIGN KEY (`role_id`)
+  REFERENCES `water_reporter`.`roles` (`role_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+
+ /********/
+ ALTER TABLE `water_reporter`.`lake_water_measurements` 
+ADD INDEX `tank_id_idx` (`tank_id` ASC) VISIBLE;
+;
+ALTER TABLE `water_reporter`.`lake_water_measurements` 
+ADD CONSTRAINT `tank_id_lkr`
+  FOREIGN KEY (`tank_id`)
+  REFERENCES `water_reporter`.`tank` (`tank_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+  /******/
+  ALTER TABLE `water_reporter`.`tank_water_measurements` 
+ADD INDEX `tank_id_wm_idx` (`tank_id` ASC) VISIBLE;
+;
+ALTER TABLE `water_reporter`.`tank_water_measurements` 
+ADD CONSTRAINT `tank_id_wm`
+  FOREIGN KEY (`tank_id`)
+  REFERENCES `water_reporter`.`tank` (`tank_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+/*******/
+ALTER TABLE `water_reporter`.`tank` 
+DROP COLUMN `address_id`;
+
+/*****/
+ALTER TABLE `water_reporter`.`tank` 
+ADD INDEX `locality_id_tw_idx` (`locality_id` ASC) VISIBLE;
+;
+ALTER TABLE `water_reporter`.`tank` 
+ADD CONSTRAINT `locality_id_tw`
+  FOREIGN KEY (`locality_id`)
+  REFERENCES `water_reporter`.`locality` (`locality_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+
+/*******/
+ALTER TABLE `water_reporter`.`municipalities` 
+ADD INDEX `created_by_mnc_idx` (`created_by` ASC) VISIBLE;
+;
+ALTER TABLE `water_reporter`.`municipalities` 
+ADD CONSTRAINT `created_by_mnc`
+  FOREIGN KEY (`created_by`)
+  REFERENCES `water_reporter`.`users` (`user_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+
+  /*******/
+  ALTER TABLE `water_reporter`.`extra_water_consumption` 
+ADD INDEX `user_id_ewc_idx` (`user_id` ASC) VISIBLE;
+;
+ALTER TABLE `water_reporter`.`extra_water_consumption` 
+ADD CONSTRAINT `user_id_ewc`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `water_reporter`.`users` (`user_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ 
