@@ -1,23 +1,15 @@
-// var express = require('express');
-// var router = express.Router();
-
-// /* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
-
-// module.exports = router;
-
-
-///////////////////////////////
 var express = require('express');
-var users = express.Router();
-var database = require('../Database/database');
 var cors = require('cors')
 var jwt = require('jsonwebtoken');
+
+var database = require('../database/database');
+var users = express.Router();
+
 var token;
 users.use(cors());
 process.env.SECRET_KEY = 'water'; //!!//
+
+
 users.post('/register', function (req, res) {
     var today = new Date();
     var appData = {
@@ -113,29 +105,28 @@ users.use(function (req, res, next) {
     }
 });
 
-users.get('/getUsers', function(req, res) {
+users.get('/getUsers', function (req, res) {
     var token = req.body.token || req.headers['token'];
     var appData = {};
-    database.connection.getConnection(function(err, connection) {
-     if (err) {
-     appData["error"] = 1;
-     appData["data"] = "Internal Server Error";
-     res.status(500).json(appData);
-     } else {
-     connection.query('SELECT *FROM users', function(err, rows, fields) {
-     if (!err) {
-     appData["error"] = 0;
-     appData["data"] = rows;
-     res.status(200).json(appData);
-     } else {
-     appData["data"] = "No data found";
-     res.status(204).json(appData);
-     }
-     });
-     connection.release();
-     }
-     });
+    database.connection.getConnection(function (err, connection) {
+        if (err) {
+            appData["error"] = 1;
+            appData["data"] = "Internal Server Error";
+            res.status(500).json(appData);
+        } else {
+            connection.query('SELECT *FROM users', function (err, rows, fields) {
+                if (!err) {
+                    appData["error"] = 0;
+                    appData["data"] = rows;
+                    res.status(200).json(appData);
+                } else {
+                    appData["data"] = "No data found";
+                    res.status(204).json(appData);
+                }
+            });
+            connection.release();
+        }
     });
-    module.exports = users;
+});
+module.exports = users;
 
-    
