@@ -241,4 +241,8 @@ ADD CONSTRAINT `user_id_ewc`
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
+/*****/
+ALTER TABLE `water_reporter`.`users` 
+CHANGE COLUMN `first_ name` `first_name` VARCHAR(255) NOT NULL ;
+
  
