@@ -4,11 +4,9 @@ var jwt = require('jsonwebtoken');
 
 var database = require('../database/database');
 var users = express.Router();
-
+let SECRET_KEY = process.env.SECRET_KEY;
 var token;
 users.use(cors());
-process.env.SECRET_KEY = 'water'; //!!//
-
 
 users.post('/register', function (req, res) {
     var today = new Date();
@@ -62,10 +60,12 @@ users.post('/login', function (req, res) {
                 } else {
                     if (rows.length > 0) {
                         if (rows[0].password == password) {
-                            token = jwt.sign(rows[0], process.env.SECRET_KEY, {
+                            console.log("ROW DATA = ",rows[0]);
+                            token = jwt.sign(JSON.parse(JSON.stringify(rows[0])), "Breeze", {
                                 expiresIn: 5000
                             });
                             appData.error = 0;
+                            appData.isAuthenticated = true;
                             appData["token"] = token;
                             res.status(200).json(appData);
                         } else {
@@ -85,25 +85,25 @@ users.post('/login', function (req, res) {
     });
 });
 
-users.use(function (req, res, next) {
-    var token = req.body.token || req.headers['token'];
-    var appData = {};
-    if (token) {
-        jwt.verify(token, process.env.SECRET_KEY, function (err) {
-            if (err) {
-                appData['error'] = 1;
-                appData['data'] = 'Token is invalid';
-                res.status(500).json(appData);
-            } else {
-                next();
-            }
-        });
-    } else {
-        appData['error'] = 1;
-        appData['data'] = 'Please send a token';
-        res.status(403).json(appData);
-    }
-});
+// users.use(function (req, res, next) {
+//     var token = req.body.token || req.headers['token'];
+//     var appData = {};
+//     if (token) {
+//         jwt.verify(token, process.env.SECRET_KEY, function (err) {
+//             if (err) {
+//                 appData['error'] = 1;
+//                 appData['data'] = 'Token is invalid';
+//                 res.status(500).json(appData);
+//             } else {
+//                 next();
+//             }
+//         });
+//     } else {
+//         appData['error'] = 1;
+//         appData['data'] = 'Please send a token';
+//         res.status(403).json(appData);
+//     }
+// });
 
 users.get('/getUsers', function (req, res) {
     var token = req.body.token || req.headers['token'];

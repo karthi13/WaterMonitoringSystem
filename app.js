@@ -1,10 +1,13 @@
 //This is an app file
 var createError = require('http-errors');
+var cors = require('cors');
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config();
+
 
 var indexRouter = require('./backend/routes/index');
 var usersRouter = require('./backend/routes/users');
@@ -16,7 +19,7 @@ const port = process.env.PORT || 4000;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -24,7 +27,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.post('/login', usersRouter);
+app.post('/register',usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,5 +47,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(port);
+
+
 
 module.exports = app;

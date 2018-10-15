@@ -5,8 +5,8 @@ var connection = mysql.createPool({
     connectionLimit: 100,
     host: 'localhost',
     user: 'root',
-    password: '',
-    database: 'water',
+    password: '1234',
+    database: 'node_test',
     port: 3306,
     debug: false,
     multipleStatements: true
