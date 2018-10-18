@@ -33,7 +33,7 @@ users.post('/register', function (req, res) {
             connection.query('INSERT INTO users SET ?', userData, function (err, rows, fields) {
                 if (!err) {
                     appData.error = 0;
-                    appData["data"] = "User registered successfully!";
+                    appData["data"] = "User Registered Successfully!";
                     res.status(201).json(appData);
                 } else {
                     appData["data"] = "Error Occured!";
@@ -66,7 +66,7 @@ users.post('/login', function (req, res) {
                 } else {
                     if (rows.length > 0) {
                         if (rows[0].password == password) {
-                            console.log("ROW DATA = ",rows[0]);
+                            console.log("ROW DATA = ", rows[0]);
                             token = jwt.sign(JSON.parse(JSON.stringify(rows[0])), "Breeze", {
                                 expiresIn: 5000
                             });
@@ -76,12 +76,12 @@ users.post('/login', function (req, res) {
                             res.status(200).json(appData);
                         } else {
                             appData.error = 1;
-                            appData["data"] = "Email and Password does not match";
+                            appData["data"] = "Email and Password do not match";
                             res.status(204).json(appData);
                         }
                     } else {
                         appData.error = 1;
-                        appData["data"] = "Email does not exists!";
+                        appData["data"] = "Email does not exist!";
                         res.status(204).json(appData);
                     }
                 }
@@ -120,7 +120,7 @@ users.get('/getUsers', function (req, res) {
             appData["data"] = "Internal Server Error";
             res.status(500).json(appData);
         } else {
-            connection.query('SELECT *FROM users', function (err, rows, fields) {
+            connection.query('SELECT * FROM users', function (err, rows, fields) {
                 if (!err) {
                     appData["error"] = 0;
                     appData["data"] = rows;
