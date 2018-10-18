@@ -9,6 +9,9 @@ var token;
 users.use(cors());
 
 users.post('/register', function (req, res) {
+
+    console.log(req);
+
     var today = new Date();
     var appData = {
         "error": 1,
@@ -43,6 +46,9 @@ users.post('/register', function (req, res) {
 });
 
 users.post('/login', function (req, res) {
+
+    console.log(req.body); 
+
     var appData = {};
     var email = req.body.email;
     var password = req.body.password;
