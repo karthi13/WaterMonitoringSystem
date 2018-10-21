@@ -33,7 +33,7 @@ class LoginPage extends React.Component {
             })
           });
         console.log(this.state);
-        this.props.history.push('/navbar');
+        this.props.history.push('/home');
     }
 
 
@@ -79,7 +79,7 @@ class LoginPage extends React.Component {
                     </form>
                     <a href="#" className="forgot-password">Forgot the password?</a>
                     <Link to="/register" className="forgot-password">Register</Link>
-                    {isAuthenticated && <Link to="/navbar"></Link>}
+                    {isAuthenticated && <Link to="/home"></Link>}
                 </div>
             </div>
 
