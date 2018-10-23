@@ -1,0 +1,19 @@
+.chart-card {
+    width: 600px !important;
+    height: 300px !important;
+
+}
+
+.line-card{
+    margin-left: 50px !important;
+    width: 700px !important;
+    height: 470px !important;
+    margin-top: 10px !important;
+}
+
+.pie-card{
+    margin-left: 50px !important;
+    width: 420px !important;
+    height: 470px !important;
+    margin-top: 10px !important;
+}
