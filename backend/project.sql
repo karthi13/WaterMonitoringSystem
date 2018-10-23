@@ -246,3 +246,10 @@ ALTER TABLE `water_reporter`.`users`
 CHANGE COLUMN `first_ name` `first_name` VARCHAR(255) NOT NULL ;
 
  
+/************* changes by karthik oct 18 **********************/
+
+ALTER TABLE `water_reporter`.`users` 
+CHANGE COLUMN `locality_id` `locality_id` INT(11) NULL ,
+CHANGE COLUMN `user_role_id` `user_role_id` INT(11) NULL ,
+CHANGE COLUMN `updated_time` `updated_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ;
+

@@ -1,16 +1,7 @@
 var mysql = require('mysql');
+let config = require('../database/config');
 
-
-var connection = mysql.createPool({
-    connectionLimit: 100,
-    host: 'localhost',
-    user: 'root',
-    password: '1234',
-    database: 'node_test',
-    port: 3306,
-    debug: false,
-    multipleStatements: true
-});
+var connection = mysql.createPool(config.config);
 
 module.exports.connection = connection;
 
