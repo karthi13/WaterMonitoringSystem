@@ -48,7 +48,7 @@ class HeaderComponent extends Component {
                         <NavbarNav right>
                         <NavItem>
                             {/* <NavLink to="#"><i class="fa fa-bell" aria-hidden="false"><Badge pill color="indigo" pill><Fa icon="bullhorn" aria-hidden="true"/></Badge></i></NavLink> */}
-                                <Dropdown>
+                                <Dropdown right>
                                     <DropdownToggle nav>
                                         <img src="images/notificationIcon.png" height="30" />
                                     </DropdownToggle>

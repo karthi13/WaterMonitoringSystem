@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
@@ -23,6 +24,7 @@
     "mysql": "^2.16.0",
     "mysql2": "^1.6.1",
     "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "sequelize": "^4.39.1",
     "sequelize-cli": "^5.1.0"

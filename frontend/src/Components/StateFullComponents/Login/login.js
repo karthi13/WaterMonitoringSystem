@@ -14,8 +14,8 @@ class LoginPage extends React.Component {
             password: '',
             isAuthenticated : false 
         }
-    }
 
+    }
 
     onSubmitHandler = ( event ) => {
 
@@ -25,12 +25,14 @@ class LoginPage extends React.Component {
         }
 
         event.preventDefault();
-        axios.post('http://localhost:4000/login', data)
+        axios.post('http://localhost:4000/api/login', data)
           .then((response) => {
             console.log(response);
-            this.setState({
-                isAuthenticated : response.isAuthenticated 
-            })
+            if(response.data.success === true){
+                this.setState({
+                    isAuthenticated : true 
+                })
+            }
           });
         console.log(this.state);
         this.props.history.push('/home');

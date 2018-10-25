@@ -89,7 +89,7 @@ class Chart extends Component {
                                     </Col>
                                 </Row>
                                 <div className="chart-wrapper" style={{ height: 300 + 'px', marginTop: 40 + 'px' }}>
-                                    <XYPlot height={300} width={600}>
+                                    <XYPlot height={300} width={300}>
                                         <VerticalGridLines />
                                         <HorizontalGridLines />
                                         <XAxis />

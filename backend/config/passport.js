@@ -1,4 +1,4 @@
-const bCrypt = require('bcrypt-nodejs');
+const bCrypt = require('bcryptjs');
 
 module.exports = (passport, user) => {
     

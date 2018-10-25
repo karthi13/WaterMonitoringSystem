@@ -1,9 +1,25 @@
-var Sequelize = require('sequelize'),
-    bcrypt = require('bcrypt');
-
+var Sequelize = require('sequelize');
+const bcrypt = require('bcryptjs');
 var config = require('../config');
 
 module.exports = (sequelize, Sequelize) => {
+    function comparePasswords(password, callback) {
+        bcrypt.compare(password, this.password, function(error, isMatch) {
+            if(error) {
+                return callback(error);
+            }
+    
+            return callback(null, isMatch);
+        });
+    }
+
+    var modelOptions = {
+        instanceMethods: {
+            comparePasswords: comparePasswords
+        },
+        underscored: true
+    };
+
 
 	const User = sequelize.define('user', {
 		id: {
@@ -44,10 +60,6 @@ module.exports = (sequelize, Sequelize) => {
 		postcode: {
 			type: Sequelize.STRING
         }, 
-        // role: {
-        //     type: Sequelize.ENUM,
-        //     values: ['user', 'admin']
-        // },
         role: {
             type: Sequelize.INTEGER,
             defaultValue: config.userRoles.user
@@ -56,9 +68,21 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.UUID,
             allowNull: true
         },
-	}, {
-        underscored: true
-      });
+    },modelOptions
+    
+    );
+
+    /** This hook method will hash password before saving it to db*/
+    User.beforeCreate((user, options) => {
+
+        return bcrypt.hash(user.password, 10)
+            .then(hash => {
+                user.password = hash;
+            })
+            .catch(err => { 
+                throw new Error(); 
+            });
+    });
 
 	return User;
 }
