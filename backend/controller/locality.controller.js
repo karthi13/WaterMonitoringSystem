@@ -13,3 +13,19 @@ exports.createLocality = (req, res) => {
 		res.json(locality);
 	})
 };
+
+exports.getAllLocalities = (req, res) => {
+	Locality.findAll().then(localities => {
+        console.log(localities)
+		res.json(localities);
+	});
+};
+
+exports.getAllLocalitiesByMunicipality = (req, res) => {
+    // console.log(req);
+	Locality.findAll({ where: {municipality_id: req.query.municipality_id} }).then(localities => {
+        console.log(localities)
+		res.json(localities);
+	});
+};
+

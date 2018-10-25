@@ -109,7 +109,7 @@ exports.authenticateUser = function (req, res) {
 
 		User.findOne(potentialUser).then(function (user) {
 			if (!user) {
-				res.status(404).json({ message: 'Authentication failed!' });
+				res.status(200).json({ message: 'User not Registered!!!', success:false });
 			} else {
 				//console.log("compre now with "+ password+ user.password );
 				comparePasswords(password,user.password, function (error, isMatch) {
@@ -129,7 +129,7 @@ exports.authenticateUser = function (req, res) {
 						});
 
 					} else {
-						res.status(404).json({ message: 'Login failed!' });
+						res.status(200).json({ message: 'Login failed!', success:false });
 					}
 				});
 			}

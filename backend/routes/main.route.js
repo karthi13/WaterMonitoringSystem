@@ -12,6 +12,9 @@ module.exports = function (app, passport) {
     // User login
     app.post('/api/login', user.authenticateUser);
 
+    app.get('/api/getLocalities', locality.getAllLocalities);
+    app.get('/api/getMunicipalites',municipality.getAllMunicipalities);
+    app.get('/api/getAllLocalitiesByMunicipality', locality.getAllLocalitiesByMunicipality);
     app.get('/logout', function(req, res){
         req.logout();
         res.redirect('/');
