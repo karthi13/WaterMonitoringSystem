@@ -33,7 +33,11 @@ class LoginPage extends React.Component {
                 this.setState({
                     isAuthenticated : true 
                 });
-                this.props.history.push('/home');
+                if(response.data.role === 2){
+                    this.props.history.push('/adminHome');
+                }else{
+                    this.props.history.push('/home');
+                }
             }else{
                 this.props.history.push('/');
                 this.setState({error : response.data.message});

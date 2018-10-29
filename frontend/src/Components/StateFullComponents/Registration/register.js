@@ -60,6 +60,7 @@ export default class RegistrationPage extends React.Component {
     }
     axios.post('http://localhost:4000/api/registerUser', data)
       .then((response) => {
+        
         if(response.status === 200 ){
           this.props.history.push("/");
         }
