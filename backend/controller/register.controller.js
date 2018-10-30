@@ -1,42 +1,60 @@
 const db = require('../config/db.config.js');
 
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 
 const Municipality = db.municipality;
-const Locality = db.locality;
 const LocalityAddress = db.localityAddress;
 const User = db.user;
 
-const Customer = db.customers;
-const Address = db.address;
-
-// create user
+// const Customer = db.customers;
+// const Address = db.address;
 
 exports.createUser = (req, res) => {
-	User.create({
-		first_name: req.body.first_name,
-		last_name: req.body.last_name,
-		email: req.body.email,
-		password: req.body.password,
-		phone_num: req.body.phone_num,
-		role: req.body.role,
-		house_number: req.body.house_number,
-		street: req.body.street,
-		postcode: req.body.postcode,
-		locality_id: req.body.locality_id
-	}).then(user => {
-		// user.setLocalityAddress(localityAddress);
-		res.json(user);
-	})
 
+	User.findOne({ where: { email: req.body.email } }).then(user => {
+		if (user) {
+			return done(null, false, {
+				message: 'That email is already taken'
+			});
+		} else {
+			console.log('the email is not take and generating hash');
+			
+			var data = {
+				email: req.body.email,
+				password: req.body.password,
+				first_name : req.body.first_name,
+				last_name : req.body.last_name,
+				phone_num : req.body.phone_num,
+				role : req.body.role,
+				house_number:req.body.house_number,
+				street:req.body.street ,
+				postcode:req.body.postcode,
+				locality_id : req.body.locality_id
+			};
+
+			User.create(data).then((newUser, created) => {
+				if (!newUser) {
+					return done(null, false);
+				}
+
+				if (newUser) {
+					let response = {
+						message : "User registered Successfully",
+						status : "success",
+					}
+					res.json(response);
+				}
+			});
+		}
+	});
 };
 
 // create a municipality
 exports.createMunicipality = (req, res) => {
 	// Save to MySQL database
-
+	console.log(req.body);
 	Municipality.create({
 		municipality_name: req.body.municipality_name,
 		created_at: new Date(),
@@ -45,42 +63,7 @@ exports.createMunicipality = (req, res) => {
 	})
 };
 
-// create a locality
-exports.createLocality = (req, res) => {
-	// Save to MySQL database
 
-	Locality.create({
-		municipality_id: req.body.municipality_id,
-		city: req.body.city,
-		created_at: new Date(),
-	}).then(locality => {
-		res.json(locality);
-	})
-};
-
-// Post a Customer
-exports.create = (req, res) => {
-	// Save to MySQL database
-
-	var customer;
-	Customer.create({
-		//customerid: db.sequelize.Utils.generateUUID(),
-		firstname: req.body.firstname,
-		lastname: req.body.lastname,
-		age: req.body.age
-	}).then(createdCustomer => {
-		// Send created customer to client
-		customer = createdCustomer;
-
-		return Address.create({
-			street: req.body.street,
-			phone: req.body.phone
-		})
-	}).then(address => {
-		customer.setAddress(address)
-		res.send('OK');
-	})
-};
 
 // FETCH all Customers include Addresses
 exports.findAll = (req, res) => {
@@ -126,7 +109,7 @@ exports.authenticateUser = function (req, res) {
 
 		User.findOne(potentialUser).then(function (user) {
 			if (!user) {
-				res.status(404).json({ message: 'Authentication failed!' });
+				res.status(200).json({ message: 'User not Registered!!!', success:false });
 			} else {
 				//console.log("compre now with "+ password+ user.password );
 				comparePasswords(password,user.password, function (error, isMatch) {
@@ -136,17 +119,17 @@ exports.authenticateUser = function (req, res) {
 						var token = jwt.sign(
 							{ email: user.email },
 							config.keys.secret,
-							{ expiresIn: '30m' }
+							{ expiresIn: '60m' }
 						);
 
 						res.json({
 							success: true,
-							token: 'JWT ' + token,
+							token: 'Bearer ' + token,
 							role: user.role // role is user !
 						});
 
 					} else {
-						res.status(404).json({ message: 'Login failed!' });
+						res.status(200).json({ message: 'Login failed!', success:false });
 					}
 				});
 			}

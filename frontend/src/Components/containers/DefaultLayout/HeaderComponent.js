@@ -6,6 +6,7 @@ import {
     DropdownMenu, DropdownItem, Fa, Badge
 } from 'mdbreact';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Link,Redirect } from 'react-router-dom';
 
 import './header.css';
 
@@ -18,6 +19,7 @@ class HeaderComponent extends Component {
             isWideEnough: false,
         };
         this.onClick = this.onClick.bind(this);
+        this.onLogoutClickHandler = this.onLogoutClickHandler.bind(this);
     }
 
     onClick() {
@@ -25,10 +27,15 @@ class HeaderComponent extends Component {
             collapse: !this.state.collapse,
         });
     }
+
+    onLogoutClickHandler = (e) => {
+        e.preventDefault();
+        this.props.history.push("/");
+    }
     render() {
         return (
             <Router>
-                <Navbar color="indigo" dark expand="md" scrolling mobile>
+                <Navbar color="indigo" dark expand="md" scrolling>
                     <NavbarBrand href="/home">
                         <img src="images/image.png" height="30" />
                     </NavbarBrand>
@@ -56,8 +63,8 @@ class HeaderComponent extends Component {
                                         {/* <DropdownItem href="#">My Account</DropdownItem>
                                         <DropdownItem href="#">Logout</DropdownItem>
                                         <DropdownItem href="#">Another Action</DropdownItem>
-                                        <DropdownItem href="#">Something else here</DropdownItem>
                                         <DropdownItem href="#">Something else here</DropdownItem> */}
+                                        <DropdownItem href="#">Something else here</DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>
                         </NavItem>
@@ -70,7 +77,7 @@ class HeaderComponent extends Component {
                                     </DropdownToggle>
                                     <DropdownMenu right style={{ right: 'auto' }}>
                                         <DropdownItem href="#">My Account</DropdownItem>
-                                        <DropdownItem href="#">Logout</DropdownItem>
+                                        <DropdownItem href="/">Logout</DropdownItem>
                                         {/* <DropdownItem href="#">Another Action</DropdownItem>
                                         <DropdownItem href="#">Something else here</DropdownItem>
                                         <DropdownItem href="#">Something else here</DropdownItem> */}

@@ -138,3 +138,24 @@
 .forgot-password:focus{
     color: rgb(12, 97, 33);
 }
+
+
+.font-size-header{
+    font-size: 20px !important;
+}
+
+
+.txt-center{
+    text-align: center !important;
+}
+
+
+@media (min-width: 120px) and (max-width: 600px) {
+    
+    .font-size-header{
+        font-size: 18px !important;
+    }
+    .card {
+        padding: 0px !important;
+    }
+}

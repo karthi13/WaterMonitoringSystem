@@ -21,7 +21,18 @@ class Chart extends Component {
             { x: 6, y: 6 },
             { x: 7, y: 3 },
             { x: 8, y: 2 },
-            { x: 9, y: 0 }
+            { x: 9, y: 0 },
+            { x: 10, y: 8 },
+            { x: 11, y: 5 },
+            { x: 12, y: 4 },
+            { x: 13, y: 9 },
+            { x: 14, y: 1 },
+            { x: 15, y: 7 },
+            { x: 16, y: 6 },
+            { x: 17, y: 3 },
+            { x: 18, y: 2 },
+            { x: 19, y: 5 },
+            { x: 20, y: 6 }
         ];
 
         const doughnut = {
@@ -45,10 +56,15 @@ class Chart extends Component {
                 ],
               }],
           };
+
+          const divStyle = {
+            marginLeft: 0,
+            marginRight: 0
+          };
         return (
             <div>
-                <Row>
-                    <Col xs="4" sm="4" lg="4">
+                <Row style={divStyle}>
+                    <Col xs="12" sm="12" lg="4">
                         <Card className="pie-card">
                             <CardBody>
                                 <Row>
@@ -63,7 +79,7 @@ class Chart extends Component {
                             </CardBody>
                         </Card>
                     </Col>
-                    <Col xs="8" sm="8" lg="8">
+                    <Col xs="12" sm="12" lg="8">
                         <Card className="line-card">
                             <CardBody>
                                 <Row>

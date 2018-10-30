@@ -12,19 +12,60 @@ export default class RegistrationPage extends React.Component {
       first_name: "",
       last_name: "",
       email: "",
-      password: ""
+      password: "",
+      role:"user",
+      house_number: "",
+			street: "" ,
+			postcode:"",
+      locality_id : "714fe24b-d253-4077-974a-7ee69da60018",
+      municipalities : [],
+      localities : []
     }
 
     this.onRegisterFormSubmit = this.onRegisterFormSubmit.bind(this);
   }
 
+  componentDidMount(prevProps, prevState){
+    axios.get('http://localhost:4000/api/getMunicipalites').then( response => {
+      console.log(response);
+      if (this.state.municipalities.length === 0) {
+        let municipalities = response.data.municipalities.map( municipality => {
+          return {
+            id : municipality.uuid,
+            municipality_name : municipality.municipality_name
+          }
+        })
+        this.setState({
+          municipalities : municipalities
+        });
+        console.log(this.state.municipalities);
+      }
+
+    });
+    console.log(this.state.municipalities);
+  }
+
   onRegisterFormSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:4000/register', this.state)
+    let data = {
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      email: this.state.email,
+      password: this.state.password,
+      role:1,
+      house_number: this.state.house_number,
+			street: this.state.street ,
+			postcode:this.state.postcode,
+      locality_id : "714fe24b-d253-4077-974a-7ee69da60018",
+    }
+    axios.post('http://localhost:4000/api/registerUser', data)
       .then((response) => {
+        
+        if(response.status === 200 ){
+          this.props.history.push("/");
+        }
         console.log(response);
       });
-    console.log(this.state);
   }
 
   render() {
@@ -83,6 +124,27 @@ export default class RegistrationPage extends React.Component {
                            group type="text" 
                            validate error="wrong" 
                            success="right" />
+                    <Input name="house_number" 
+                           value={this.state.house_number} 
+                           onChange={(e) => this.setState({
+                            house_number: e.target.value
+                           })}
+                           label="House number" 
+                           icon="envelope" 
+                           success="right" />
+                    <Input name="street" 
+                           value={this.state.street} 
+                           onChange={(e) => this.setState({
+                            street: e.target.value
+                           })}
+                           label="Street"  
+                           validate />
+                    <Input name="postcode" 
+                           label="Postcode" 
+                           group type="text" 
+                           validate error="wrong" 
+                           success="right" />
+                                
                   </div>
                   <div className="text-center py-4 mt-3">
                   <Button onClick={(e) => this.onRegisterFormSubmit(e)}color="cyan" type="submit">Register</Button>

@@ -54,11 +54,8 @@ class NavbarComponent extends Component {
         return (
             <div className="max-width" >
                 <HeaderComponent/>
-                
-                    <BtnGroup/>
-                
-                
-                    <Chart chartData={this.state.chartData} location="Massachusetts" legendPosition="bottom"/>
+                <BtnGroup/>
+                <Chart chartData={this.state.chartData} location="Massachusetts" legendPosition="bottom"/>
                 
             </div>
         );

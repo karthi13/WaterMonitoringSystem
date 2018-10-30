@@ -12,10 +12,11 @@ class LoginPage extends React.Component {
         this.state = {
             email: '',
             password: '',
-            isAuthenticated : false 
+            isAuthenticated : false, 
+            error:""
         }
-    }
 
+    }
 
     onSubmitHandler = ( event ) => {
 
@@ -25,15 +26,24 @@ class LoginPage extends React.Component {
         }
 
         event.preventDefault();
-        axios.post('http://localhost:4000/login', data)
+        axios.post('http://localhost:4000/api/login', data)
           .then((response) => {
             console.log(response);
-            this.setState({
-                isAuthenticated : response.isAuthenticated 
-            })
+            if(response.data.success === true){
+                this.setState({
+                    isAuthenticated : true 
+                });
+                if(response.data.role === 2){
+                    this.props.history.push('/adminHome');
+                }else{
+                    this.props.history.push('/home');
+                }
+            }else{
+                this.props.history.push('/');
+                this.setState({error : response.data.message});
+            }
           });
         console.log(this.state);
-        this.props.history.push('/home');
     }
 
 
@@ -77,6 +87,7 @@ class LoginPage extends React.Component {
                         </div>
                         <button onClick={(e) => this.onSubmitHandler(e)} className="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
                     </form>
+                    {this.state.error}
                     <a href="#" className="forgot-password">Forgot the password?</a>
                     <Link to="/register" className="forgot-password">Register</Link>
                     {isAuthenticated && <Link to="/home"></Link>}

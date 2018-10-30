@@ -7,7 +7,7 @@ import { faStroopwafel } from '@fortawesome/free-solid-svg-icons';
 import Navbar from './Components/StateFullComponents/Navbar/navbar';
 import LoginPage from './Components/StateFullComponents/Login/login';
 import RegistrationPage from './Components/StateFullComponents/Registration/register';
-
+import AdminNavbar from './Components/StateFullComponents/AdminComponents/AdminNavbar/adminNavabr';
 library.add(faStroopwafel);
 
 class App extends Component {
@@ -17,6 +17,7 @@ class App extends Component {
                 <Route exact path="/" component={LoginPage} />
                 <Route exact path="/register" component={RegistrationPage} />
                 <Route exact path="/home" component={Navbar} />
+                <Route exact path="/adminHome" component={AdminNavbar} />
             </div>
         );
     }
