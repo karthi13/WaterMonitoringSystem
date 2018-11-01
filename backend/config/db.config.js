@@ -26,11 +26,7 @@ db.user = require('../model/user.model')(sequelize, Sequelize);
 db.localityAddress = require('../model/localityAddress.model')(sequelize, Sequelize);
 db.locality = require('../model/locality.model')(sequelize, Sequelize);
 db.municipality = require('../model/municipality.model')(sequelize, Sequelize);
-<<<<<<< HEAD
 db.waterUsage = require('../model/userWaterConsumption.model')(sequelize, Sequelize);
-=======
-
->>>>>>> a0cee4f14940b8d4a96ffe77f95dfc05c618f6a5
 // db.address.belongsTo(db.customers, {foreignKey: 'fk_customerid', targetKey: 'uuid'});
 // db.customers.hasOne(db.address, {foreignKey: 'fk_customerid', targetKey: 'uuid'});
 
@@ -46,7 +42,8 @@ db.user.hasOne(db.localityAddress);
 db.user.belongsTo(db.locality);
 db.locality.hasMany(db.user);
 
-db.waterUsage.belongsTo(db.user);
-db.user.hasMany(db.waterUsage);
+//db.waterUsage.belongsTo(db.user);
+//db.user.hasMany(db.waterUsage);
 
 module.exports = db;
+

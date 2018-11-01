@@ -2,8 +2,8 @@
 {
   "development": {
     "username": "root",
-    "password": "1234",
-    "database": "water_reporter",
+    "password": "",
+    "database": "water",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "pool": {
@@ -16,7 +16,7 @@
   "test": {
     "username": "root",
     "password": null,
-    "database": "water_reporter",
+    "database": "water",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "pool": {
@@ -29,7 +29,7 @@
   "production": {
     "username": "root",
     "password": null,
-    "database": "water_reporter",
+    "database": "water",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "pool": {
