@@ -42,8 +42,8 @@ db.user.hasOne(db.localityAddress);
 db.user.belongsTo(db.locality);
 db.locality.hasMany(db.user);
 
-//db.waterUsage.belongsTo(db.user);
-//db.user.hasMany(db.waterUsage);
+db.waterUsage.belongsTo(db.user);
+db.user.hasMany(db.waterUsage);
 
 module.exports = db;
 
