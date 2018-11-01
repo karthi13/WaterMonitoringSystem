@@ -1,5 +1,7 @@
 'use strict';
 const db = require('../config/db.config.js');
+var Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const WaterUsage = db.waterUsage;
 
@@ -13,7 +15,7 @@ exports.waterUsed = (req, res) => {
         res.json({
             message: "Stored in DB",
             success: true
-        })
+        });
     });
 
 }
@@ -31,21 +33,35 @@ exports.waterUsed = (req, res) => {
 //     });
 // };
 
-exports.find_water_usage_specific_day = (req, res) => {
-    var date = moment().date();
-    waterUsage.sum('water_used', {
+exports.findWaterUsageToday = (req, res) => {
+    var date = new Date();
+    console.log(date);
+    WaterUsage.sum('water_used', {
         where: {
-            user_id: req.body.user_id,
+            user_id: req.query.user_id,
             //[Op.between]: [{ created_at: req.body.date }, { created_at: req.body.date }]
-            created_at: { [Op.between]: [date, date] }
+//             sequelize.fn('date', sequelize.col('event_date')), 
+//     '<=', '2016-10-10'
+//   ),
+            created_at: {
+                [Op.lt]: new Date(),
+                [Op.gt]: new Date().setHours(0,59,59,0)
+              }
         }
-
+// where: sequelize.where(sequelize.fn('char_length', sequelize.col('status')), 6)
     }).then(sum => {
-        console.log("The total water usage " + sum)
+        console.log("The total water usage " + sum);
+
+
+        res.json({
+            message: "Total data from db",
+            success: true,
+            data : sum
+        });
     })
 };
 
-exports.find_water_usage_specific_month = (req, res) => {
+exports.findWaterUsageMonth = (req, res) => {
     var month = moment().month();
     var year = moment().year() ;
     waterUsage.sum('water_used', {
@@ -63,7 +79,7 @@ exports.find_water_usage_specific_month = (req, res) => {
 })
 };
 
-exports.find_water_usage_specific_year = (req, res) => {
+exports.findWaterUsageYear = (req, res) => {
     waterUsage.sum('water_used', {
         where: {
             user_id: req.body.user_id,

@@ -21,6 +21,11 @@ module.exports = function (app, passport) {
         res.redirect('/');
     });
 
+    app.post('/api/storeWaterUsed', waterUsage.waterUsed);
+    app.get('/api/getUsageToday', waterUsage.findWaterUsageToday);
+    app.get('/api/getUsageMonth', waterUsage.findWaterUsageMonth);
+    app.get('/api/getUsageYear', waterUsage.findWaterUsageYear);
+
     //routes restriction !!
     var config = require('../config'),
         AdminController = require('../controller/adminController'),
@@ -45,9 +50,9 @@ module.exports = function (app, passport) {
 
     //here the problem how to get from the token username
     // to get userID of the username, it's simple using sequlize 
-    app.get('/api/today', passport.authenticate('jwt', { session: false }), allowOnly(config.accessLevels.user, waterUsage.find_water_usage_specific_day));
-    app.get('/api/this_month', passport.authenticate('jwt', { session: false }), allowOnly(config.accessLevels.user, waterUsage.find_water_usage_specific_month));
-    app.get('/api/this_year', passport.authenticate('jwt', { session: false }), allowOnly(config.accessLevels.user, waterUsage.find_water_usage_specific_year));
+    // app.get('/api/today', passport.authenticate('jwt', { session: false }), allowOnly(config.accessLevels.user, waterUsage.find_water_usage_specific_day));
+    // app.get('/api/this_month', passport.authenticate('jwt', { session: false }), allowOnly(config.accessLevels.user, waterUsage.find_water_usage_specific_month));
+    // app.get('/api/this_year', passport.authenticate('jwt', { session: false }), allowOnly(config.accessLevels.user, waterUsage.find_water_usage_specific_year));
 
     app.get('/api/admin', passport.authenticate('jwt', { session: false }), allowOnly(config.accessLevels.admin, AdminController.index));
 

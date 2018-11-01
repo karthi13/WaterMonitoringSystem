@@ -125,7 +125,9 @@ exports.authenticateUser = function (req, res) {
 						res.json({
 							success: true,
 							token: 'Bearer ' + token,
-							role: user.role // role is user !
+							role: user.role, // role is user !
+							user_id : user.id,
+							first_name : user.first_name
 						});
 
 					} else {

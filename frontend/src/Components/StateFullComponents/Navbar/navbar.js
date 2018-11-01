@@ -1,9 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { Navbar, NavItem } from 'react-bootstrap';
 import HeaderComponent  from '../../containers/DefaultLayout/HeaderComponent';
-import BtnGroup  from '../../StateLessComponents/buttonGroup';
+import ButtonGroupComponent  from '../../StateFullComponents/ButtonGroup/buttonGroupComponent';
 import Chart from '../chartComponents/realtimeLineChart';
 import './navbar.css';
+
+
+import axios from 'axios';
 
 
 class NavbarComponent extends Component {
@@ -15,9 +18,33 @@ class NavbarComponent extends Component {
         }
     }
 
+    componentDidMount() {
+      
+      setInterval(() => { 
+
+        let randomWaterStore = Math.floor(Math.random() * Math.floor(2));
+
+        if(randomWaterStore === 1){
+          let data = {
+            user_id: this.props.location.state.userData.user_id,
+            water_used : Math.random().toFixed(4)
+          }
+          axios.post('http://localhost:4000/api/storeWaterUsed', data)
+          .then(( res )=> console.log( res ));
+
+          axios.get('http://localhost:4000/api/getUsageToday', {
+            params: {
+              user_id: this.props.location.state.userData.user_id
+            }
+          }).then(( res )=> console.log( res ));
+        }
+
+      }, 30000);
+    }
+
     componentWillMount(){
         this.getChartData();
-      }
+    }
     
       getChartData(){
         // Ajax calls here
@@ -54,7 +81,7 @@ class NavbarComponent extends Component {
         return (
             <div className="max-width" >
                 <HeaderComponent/>
-                <BtnGroup/>
+                <ButtonGroupComponent/>
                 <Chart chartData={this.state.chartData} location="Massachusetts" legendPosition="bottom"/>
                 
             </div>

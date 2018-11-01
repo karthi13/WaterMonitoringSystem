@@ -34,9 +34,15 @@ class LoginPage extends React.Component {
                     isAuthenticated : true 
                 });
                 if(response.data.role === 2){
-                    this.props.history.push('/adminHome');
+                    this.props.history.push({
+                        pathname: '/adminHome',
+                        state: { adminData: response.data }
+                      });
                 }else{
-                    this.props.history.push('/home');
+                    this.props.history.push({
+                        pathname: '/home',
+                        state: { userData: response.data }
+                      });
                 }
             }else{
                 this.props.history.push('/');
