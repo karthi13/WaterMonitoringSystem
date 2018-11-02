@@ -29,7 +29,7 @@ webpush.setVapidDetails(
   privateVapidKey
 );
 
-// Subscribe Route
+// Subscribe Route .. This shall be called only if a trigger happened in DB 
 app.post("/subscribe", (req, res) => {
   // Get pushSubscription object
   const subscription = req.body;
@@ -37,8 +37,13 @@ app.post("/subscribe", (req, res) => {
   // Send 201 - resource created
   res.status(201).json({});
 
+  var percent=85; //frm db 
   // Create payload
-  const payload = JSON.stringify({ title: "Push Test" });
+  const payload = JSON.stringify({ 
+    title: "Water Usage Alert" ,
+    body: "Your Water Usage Exceeded "+ percent+"%",
+    //icon: follower.photoURL
+  });
 
   // Pass object into sendNotification
   webpush
