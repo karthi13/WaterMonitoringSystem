@@ -47,19 +47,36 @@ exports.findWaterUsageToday = (req, res) => {
             //     '<=', '2016-10-10'
             //   ),
             created_at: {
+<<<<<<< HEAD
                 [Op.lt]: new Date(),
                 [Op.gt]: new Date().setHours(0, 59, 59, 0)
             }
+=======
+                [Op.lt]: new Date().setHours(0,59,59,0),
+                [Op.gt]: new Date().setHours(0,0,0,0)
+              }
+>>>>>>> 13c5a0fc14121660ec22051699b0df59c8e4e65d
         }
         // where: sequelize.where(sequelize.fn('char_length', sequelize.col('status')), 6)
     }).then(sum => {
         console.log("The total water usage " + sum);
 
 
+        let data = {
+            sum,
+            water_exceeded : (sum - 100) > 0 ? (sum - 100) : 0,
+            water_remaining : (100 - sum) > 0 ? (100 - sum) : 0   
+        }
+
+
         res.json({
             message: "Total water usage today",
             success: true,
+<<<<<<< HEAD
             data: sum
+=======
+            data
+>>>>>>> 13c5a0fc14121660ec22051699b0df59c8e4e65d
         });
     })
 };

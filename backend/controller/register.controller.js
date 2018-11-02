@@ -89,7 +89,7 @@ function comparePasswords(password,userPass, callback) {
 	bcrypt.compare(password, userPass, function (error, isMatch) {
 		//console.log("compre now with "+ password+ userPass );
 		if (error) {
-			console.log("NON "+ password+ userPass );
+			// console.log("NON "+ password+ userPass );
 			return callback(error);
 
 		}

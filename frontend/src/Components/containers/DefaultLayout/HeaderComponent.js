@@ -45,9 +45,9 @@ class HeaderComponent extends Component {
                             <NavItem active>
                                 <NavLink to="#">Home</NavLink>
                             </NavItem>
-                            <NavItem>
+                            {/* <NavItem>
                                 <NavLink to="#">Features</NavLink>
-                            </NavItem>
+                            </NavItem> */}
                             <NavItem>
                                 <NavLink to="/payments">Payments</NavLink>
                             </NavItem>

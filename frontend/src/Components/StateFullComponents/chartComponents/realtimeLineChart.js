@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Row, Col, Card, CardBody, CardTitle } from 'reactstrap';
 import { Bar, Doughnut, Line, Pie, Polar, Radar } from 'react-chartjs-2';
 import './chart.css';
-import { XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis } from 'react-vis';
+import {VerticalBarSeries, XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis } from 'react-vis';
 class Chart extends Component {
     constructor(props) {
         super(props);
@@ -11,6 +11,8 @@ class Chart extends Component {
     }
 
     render() {
+
+        console.log(this.props.chartData);
         const data = [
             { x: 0, y: 8 },
             { x: 1, y: 5 },
@@ -74,7 +76,7 @@ class Chart extends Component {
                                     </Col>
                                 </Row>
                                 <div className="chart-wrapper" style={{ height: 300 + 'px', marginTop: 40 + 'px' }}>
-                                    <Doughnut data={doughnut} />
+                                    <Doughnut data={this.props.chartData.doughnut} />
                                 </div>
                             </CardBody>
                         </Card>
@@ -89,12 +91,12 @@ class Chart extends Component {
                                     </Col>
                                 </Row>
                                 <div className="chart-wrapper" style={{ height: 300 + 'px', marginTop: 40 + 'px' }}>
-                                    <XYPlot height={300} width={300}>
+                                    <XYPlot height={300} width={600}>
                                         <VerticalGridLines />
                                         <HorizontalGridLines />
                                         <XAxis />
                                         <YAxis />
-                                        <LineSeries data={data} />
+                                        <VerticalBarSeries data={data} />
                                     </XYPlot>
                                 </div>
                             </CardBody>
