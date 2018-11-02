@@ -128,7 +128,7 @@ exports.findWaterUsagePerHour = (req, res) => {
         },
         attributes: [
             [Sequelize.fn( 'hour', Sequelize.col('created_at')), 'hour'],
-            [Sequelize.fn('sum', '*'), 'water_used']
+            [Sequelize.fn('sum', 'water_used'), 'water_used']
         ],
         group: 'hour'
 
