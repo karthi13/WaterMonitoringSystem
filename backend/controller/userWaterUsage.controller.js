@@ -47,15 +47,9 @@ exports.findWaterUsageToday = (req, res) => {
             //     '<=', '2016-10-10'
             //   ),
             created_at: {
-<<<<<<< HEAD
-                [Op.lt]: new Date(),
-                [Op.gt]: new Date().setHours(0, 59, 59, 0)
-            }
-=======
                 [Op.lt]: new Date().setHours(0,59,59,0),
                 [Op.gt]: new Date().setHours(0,0,0,0)
               }
->>>>>>> 13c5a0fc14121660ec22051699b0df59c8e4e65d
         }
         // where: sequelize.where(sequelize.fn('char_length', sequelize.col('status')), 6)
     }).then(sum => {
@@ -72,11 +66,7 @@ exports.findWaterUsageToday = (req, res) => {
         res.json({
             message: "Total water usage today",
             success: true,
-<<<<<<< HEAD
-            data: sum
-=======
             data
->>>>>>> 13c5a0fc14121660ec22051699b0df59c8e4e65d
         });
     })
 };
@@ -139,13 +129,14 @@ exports.findWaterUsagePerHour = (req, res) => {
             user_id: req.query.user_id,
             created_at: {
 
-                [Op.gt]: new Date().setHours(0, 0, 0, 0),
-                [Op.lt]: new Date().setHours(0, 59, 59, 0)
+                [Op.gt]: new Date().setHours(1, 0, 0, 0),
+                [Op.lt]: new Date().setHours(24, 59, 59, 0)
             }
         },
         attributes: [
-            [Sequelize.fn( 'hour', Sequelize.col('created_at')), 'hour'],
-            [Sequelize.fn('sum', 'water_used'), 'water_used']
+            [Sequelize.fn('hour', Sequelize.col('created_at')), 'hour'],
+            // [Sequelize.fn('sum', 'water_used'), 'water_used'],
+            [Sequelize.literal('SUM(water_used)'), 'water_used']
         ],
         group: 'hour'
 
