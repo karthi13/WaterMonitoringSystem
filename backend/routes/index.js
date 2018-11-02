@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 const app = express();
 
 // Set static path
-app.use(express.static(path.join(__dirname, "frontend")));
+app.use(express.static(path.join(__dirname, "../frontend")));
 
 app.use(bodyParser.json());
 
