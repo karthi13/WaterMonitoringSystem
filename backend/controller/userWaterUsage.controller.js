@@ -56,10 +56,17 @@ exports.findWaterUsageToday = (req, res) => {
         console.log("The total water usage " + sum);
 
 
+        let data = {
+            sum,
+            water_exceeded : (sum - 100) > 0 ? (sum - 100) : 0,
+            water_remaining : (100 - sum) > 0 ? (100 - sum) : 0   
+        }
+
+
         res.json({
             message: "Total data from db",
             success: true,
-            data : sum
+            data
         });
     })
 };

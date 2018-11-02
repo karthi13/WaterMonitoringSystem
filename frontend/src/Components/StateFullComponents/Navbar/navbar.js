@@ -50,6 +50,25 @@ class NavbarComponent extends Component {
         // Ajax calls here
         this.setState({
           chartData:{
+
+           doughnut : {
+              labels: [ 'Water limit Used','Water limit Left','Water limit exceeded'],
+              datasets: [
+                {
+                  data: [300, 50, 100],
+                  backgroundColor: [
+                    '#FF6384',
+                    '#36A2EB',
+                    '#FFCE56',
+                  ],
+                  hoverBackgroundColor: [
+                    '#FF6384',
+                    '#36A2EB',
+                    '#FFCE56',
+                  ],
+                }],
+            },
+
             labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
             datasets:[
               {
@@ -82,8 +101,7 @@ class NavbarComponent extends Component {
             <div className="max-width" >
                 <HeaderComponent/>
                 <ButtonGroupComponent/>
-                <Chart chartData={this.state.chartData} location="Massachusetts" legendPosition="bottom"/>
-                
+                <Chart chartData={this.state.chartData}/>  
             </div>
         );
     }
