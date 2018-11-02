@@ -24,7 +24,8 @@ module.exports = function (app, passport) {
     app.post('/api/storeWaterUsed', waterUsage.waterUsed);
     app.get('/api/getUsageToday', waterUsage.findWaterUsageToday);
     app.get('/api/getUsageMonth', waterUsage.findWaterUsageMonth);
-    app.get('/api/getUsageYear', waterUsage.findWaterUsageYear);
+    app.get('/api/getUsageYear', waterUsage.findWaterUsageYear); 
+    app.get('/api/getUsageHour', waterUsage.findWaterUsagePerHour);
 
     //routes restriction !!
     var config = require('../config'),
