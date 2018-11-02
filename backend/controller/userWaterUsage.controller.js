@@ -1,6 +1,9 @@
 'use strict';
 const db = require('../config/db.config.js');
 var Sequelize = require('sequelize');
+var moment = require('moment');
+
+
 const Op = Sequelize.Op;
 
 const WaterUsage = db.waterUsage;
@@ -62,35 +65,51 @@ exports.findWaterUsageToday = (req, res) => {
 };
 
 exports.findWaterUsageMonth = (req, res) => {
-    var month = moment().month();
+    moment().format();
+    var month = moment().month()+1;
     var year = moment().year() ;
-    waterUsage.sum('water_used', {
+    WaterUsage.sum('water_used', {
         where: {
-            user_id: req.body.user_id,
+            user_id: req.query.user_id,
             //[Op.between]: [{ created_at: req.body.date }, { created_at: req.body.date }]
 
-            $and: [
-                sequelize.where(sequelize.fn('month', sequelize.col("created_at")), month),
-                sequelize.where(sequelize.fn('year', sequelize.col("created_at")), year)
+            [Op.and]: [
+                Sequelize.where(Sequelize.fn('month', Sequelize.col("created_at")), month),
+                Sequelize.where(Sequelize.fn('year', Sequelize.col("created_at")), year)
               ], 
 }
     }).then(sum => {
-    console.log("The total water usage " + sum)
+    console.log("The total water usage " + sum);
+
+    res.json({
+        message: "Total data from db",
+        success: true,
+        data : sum
+    });
 })
 };
 
 exports.findWaterUsageYear = (req, res) => {
-    waterUsage.sum('water_used', {
+    moment().format();
+    var year = moment().year() ;
+
+    WaterUsage.sum('water_used', {
         where: {
-            user_id: req.body.user_id,
+            user_id: req.query.user_id,
             //[Op.between]: [{ created_at: req.body.date }, { created_at: req.body.date }]
 
-            $and: [               
-                sequelize.where(sequelize.fn('year', sequelize.col("created_at")), year)
+            [Op.and]: [               
+                Sequelize.where(Sequelize.fn('year', Sequelize.col("created_at")), year)
               ], 
 }
     }).then(sum => {
-    console.log("The total water usage " + sum)
+    console.log("The total water usage " + sum);
+
+    res.json({
+        message: "Total data from db",
+        success: true,
+        data : sum
+    });
 })
 };
 
