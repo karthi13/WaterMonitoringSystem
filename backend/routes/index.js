@@ -20,9 +20,8 @@ app.use(express.static(path.join(__dirname, "../frontend")));
 
 app.use(bodyParser.json());
 
-const publicVapidKey =
-  "BFSGOd7W_UObKJRIy0eXoqIKWkYpkM7imDBtE_Ds5aeE5f4LNw2h7yUQO9R5xQqDyfaNu_hf7kzzKhlCZrG_QZQ";
-const privateVapidKey = "4IPU7p8KvW5ZUOflDb-TNZp8GyojX4O8Btn_thFk5X8";
+const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
+const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
 
 webpush.setVapidDetails(
   "mailto:test@test.com",
