@@ -44,8 +44,8 @@ exports.findWaterUsageToday = (req, res) => {
 //     '<=', '2016-10-10'
 //   ),
             created_at: {
-                [Op.lt]: new Date(),
-                [Op.gt]: new Date().setHours(0,59,59,0)
+                [Op.lt]: new Date().setHours(0,59,59,0),
+                [Op.gt]: new Date().setHours(0,0,0,0)
               }
         }
 // where: sequelize.where(sequelize.fn('char_length', sequelize.col('status')), 6)
