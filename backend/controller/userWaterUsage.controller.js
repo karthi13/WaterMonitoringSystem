@@ -47,15 +47,9 @@ exports.findWaterUsageToday = (req, res) => {
             //     '<=', '2016-10-10'
             //   ),
             created_at: {
-<<<<<<< HEAD
-                [Op.lt]: new Date(),
-                [Op.gt]: new Date().setHours(0, 59, 59, 0)
+                [Op.lt]: new Date().setHours(0, 59, 59, 0),
+                [Op.gt]: new Date().setHours(0, 0, 0, 0)
             }
-=======
-                [Op.lt]: new Date().setHours(0,59,59,0),
-                [Op.gt]: new Date().setHours(0,0,0,0)
-              }
->>>>>>> 13c5a0fc14121660ec22051699b0df59c8e4e65d
         }
         // where: sequelize.where(sequelize.fn('char_length', sequelize.col('status')), 6)
     }).then(sum => {
@@ -64,19 +58,15 @@ exports.findWaterUsageToday = (req, res) => {
 
         let data = {
             sum,
-            water_exceeded : (sum - 100) > 0 ? (sum - 100) : 0,
-            water_remaining : (100 - sum) > 0 ? (100 - sum) : 0   
+            water_exceeded: (sum - 100) > 0 ? (sum - 100) : 0,
+            water_remaining: (100 - sum) > 0 ? (100 - sum) : 0
         }
 
 
         res.json({
             message: "Total water usage today",
             success: true,
-<<<<<<< HEAD
-            data: sum
-=======
             data
->>>>>>> 13c5a0fc14121660ec22051699b0df59c8e4e65d
         });
     })
 };
@@ -139,24 +129,24 @@ exports.findWaterUsagePerHour = (req, res) => {
             user_id: req.query.user_id,
             created_at: {
 
-                [Op.gt]: new Date().setHours(0, 0, 0, 0),
-                [Op.lt]: new Date().setHours(0, 59, 59, 0)
+                [Op.gt]: new Date().setHours(1, 0, 0, 0),
+                [Op.lt]: new Date().setHours(24, 59, 59, 0)
             }
         },
         attributes: [
-            [Sequelize.fn( 'hour', Sequelize.col('created_at')), 'hour'],
-            [Sequelize.fn('sum', 'water_used'), 'water_used']
+            [Sequelize.fn('hour', Sequelize.col('created_at')), 'hour'],
+            [Sequelize.fn('sum', 'water_used'), 'sum']
         ],
         group: 'hour'
 
-}).then(usage_by_hour => {
-   
-    res.json({
-        message: "Water usage per hour",
-        success: true,
-        data: usage_by_hour
-    });
-})
+    }).then(usage_by_hour => {
+
+        res.json({
+            message: "Water usage per hour",
+            success: true,
+            data: usage_by_hour
+        });
+    })
 };
 
 
