@@ -85,15 +85,16 @@ const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
 const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
 
 webpush.setVapidDetails(
-  "mailto:test@test.com",
+  "mailto:water@water_reporter.com",
   publicVapidKey,
   privateVapidKey
 );
 
 // Subscribe Route .. This shall be called only if a trigger happened in DB 
-app.post("/subscribe", (req, res) => {
+app.post("/subscribe", (req, res, next) => {
   // Get pushSubscription object
   const subscription = req.body;
+  console.log(subscription)
 
   // Send 201 - resource created
   res.status(201).json({});
@@ -106,10 +107,20 @@ app.post("/subscribe", (req, res) => {
     //icon: follower.photoURL
   });
 
+  pushIntervalID = setInterval(() => {
   // Pass object into sendNotification
   webpush
     .sendNotification(subscription, payload)
-    .catch(err => console.error(err));
+    //.catch(err => console.error(err));
+    .catch(() => clearInterval(pushIntervalID))
+  }, 30000)
 });
+
+
+app.delete("/unsubscribe", (req, res, next) => {
+  subscription = null
+  clearInterval(pushIntervalID)
+  res.sendStatus(200)
+})
 
 module.exports = app;
