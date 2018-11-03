@@ -26,7 +26,46 @@ class NavbarComponent extends Component {
           barChartData: []
         }
     }
+    componentWillMount(){
+      axios.get('http://localhost:4000/api/getUsageToday', {
+            params: {
+              user_id: this.props.location.state.userData.user_id
+            }
+          }).then(( res )=> {
+            console.log(res)
+            let pieData = [ res.data.data.sum,  res.data.data.water_remaining, res.data.data.water_exceeded]
 
+            let doughnutData = {
+              labels: [ 'Water limit Used','Water limit Left','Water limit exceeded'],
+              datasets: [
+                {
+                  data: pieData,
+                  backgroundColor: [ '#FF6384', '#36A2EB', '#FFCE56' ],
+                  hoverBackgroundColor: [ '#FF6384', '#36A2EB', '#FFCE56' ],
+                }]
+            }
+
+            let barChartData = [];
+            let usageBYHour = [...res.data.data.usage_by_hour];
+            for (let i = 0; i < 24; i++) { 
+              for (let j = 0; j < usageBYHour.length; j++){
+                if( i === usageBYHour[j].hour){
+                  barChartData.push({
+                    x : i,
+                    y : usageBYHour[j].water_used
+                  });
+                }
+              }
+              if( barChartData.length === i)
+                barChartData.push({ x : i, y : 0});
+            }
+
+            this.setState({
+              chartData : doughnutData,
+              barChartData
+            })
+          });
+    }
     componentDidMount() {
       
       setInterval(() => { 
@@ -63,7 +102,7 @@ class NavbarComponent extends Component {
             let usageBYHour = [...res.data.data.usage_by_hour];
             for (let i = 0; i < 24; i++) { 
               for (let j = 0; j < usageBYHour.length; j++){
-                if( i === usageBYHour[j]){
+                if( i === usageBYHour[j].hour){
                   barChartData.push({
                     x : i,
                     y : usageBYHour[j].water_used
