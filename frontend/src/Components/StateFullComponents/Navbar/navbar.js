@@ -14,7 +14,16 @@ class NavbarComponent extends Component {
     constructor(){
         super();
         this.state = {
-          chartData:{}
+          chartData: {
+            labels: [ 'Water limit Used','Water limit Left','Water limit exceeded'],
+            datasets: [
+              {
+                data: [0,0,0],
+                backgroundColor: [ '#FF6384', '#36A2EB', '#FFCE56' ],
+                hoverBackgroundColor: [ '#FF6384', '#36A2EB', '#FFCE56' ],
+              }]
+          },
+          barChartData: []
         }
     }
 
@@ -36,72 +45,51 @@ class NavbarComponent extends Component {
             params: {
               user_id: this.props.location.state.userData.user_id
             }
-          }).then(( res )=> console.log( res ));
+          }).then(( res )=> {
+            console.log(res)
+            let pieData = [ res.data.data.sum,  res.data.data.water_remaining, res.data.data.water_exceeded]
+
+            let doughnutData = {
+              labels: [ 'Water limit Used','Water limit Left','Water limit exceeded'],
+              datasets: [
+                {
+                  data: pieData,
+                  backgroundColor: [ '#FF6384', '#36A2EB', '#FFCE56' ],
+                  hoverBackgroundColor: [ '#FF6384', '#36A2EB', '#FFCE56' ],
+                }]
+            }
+
+            let barChartData = [];
+            let usageBYHour = [...res.data.data.usage_by_hour];
+            for (let i = 0; i < 24; i++) { 
+              for (let j = 0; j < usageBYHour.length; j++){
+                if( i === usageBYHour[j]){
+                  barChartData.push({
+                    x : i,
+                    y : usageBYHour[j].water_used
+                  });
+                }
+              }
+              if( barChartData.length === i)
+                barChartData.push({ x : i, y : 0});
+            }
+
+            this.setState({
+              chartData : doughnutData,
+              barChartData
+            })
+          });
         }
 
       }, 30000);
     }
-
-    componentWillMount(){
-        this.getChartData();
-    }
-    
-      getChartData(){
-        // Ajax calls here
-        this.setState({
-          chartData:{
-
-           doughnut : {
-              labels: [ 'Water limit Used','Water limit Left','Water limit exceeded'],
-              datasets: [
-                {
-                  data: [300, 50, 100],
-                  backgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56',
-                  ],
-                  hoverBackgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56',
-                  ],
-                }],
-            },
-
-            labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
-            datasets:[
-              {
-                label:'Population',
-                data:[
-                  617594,
-                  181045,
-                  153060,
-                  106519,
-                  105162,
-                  95072
-                ],
-                backgroundColor:[
-                  'rgba(255, 99, 132, 0.6)',
-                  'rgba(54, 162, 235, 0.6)',
-                  'rgba(255, 206, 86, 0.6)',
-                  'rgba(75, 192, 192, 0.6)',
-                  'rgba(153, 102, 255, 0.6)',
-                  'rgba(255, 159, 64, 0.6)',
-                  'rgba(255, 99, 132, 0.6)'
-                ]
-              }
-            ]
-          }
-        });
-      }
 
     render() {
         return (
             <div className="max-width" >
                 <HeaderComponent/>
                 <ButtonGroupComponent/>
-                <Chart chartData={this.state.chartData}/>  
+                <Chart chartData={this.state}/>  
             </div>
         );
     }
