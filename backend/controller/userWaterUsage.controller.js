@@ -75,7 +75,6 @@ exports.findWaterUsageToday = (req, res) => {
         where: {
             user_id: req.query.user_id,
             created_at: {
-
                 [Op.gt]: new Date().setHours(1, 0, 0, 0),
                 [Op.lt]: new Date().setHours(24, 59, 59, 0)
             }
@@ -99,7 +98,7 @@ exports.findWaterUsageToday = (req, res) => {
             water_exceeded: (sum - 100) > 0 ? (sum - 100) : 0,
             water_remaining: (100 - sum) > 0 ? (100 - sum) : 0,
             usage_by_hour
-        }
+       }
 
         res.json({
             message : "Succesfull data acquired",

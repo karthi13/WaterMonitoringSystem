@@ -76,7 +76,7 @@ class Chart extends Component {
                                     </Col>
                                 </Row>
                                 <div className="chart-wrapper" style={{ height: 300 + 'px', marginTop: 40 + 'px' }}>
-                                    <Doughnut data={this.props.chartData.doughnut} />
+                                    <Doughnut data={this.props.chartData.chartData} />
                                 </div>
                             </CardBody>
                         </Card>
@@ -96,7 +96,7 @@ class Chart extends Component {
                                         <HorizontalGridLines />
                                         <XAxis />
                                         <YAxis />
-                                        <VerticalBarSeries data={data} />
+                                        <VerticalBarSeries data={this.props.chartData.barChartData} />
                                     </XYPlot>
                                 </div>
                             </CardBody>
