@@ -7,6 +7,7 @@ var bodyparser = require('body-parser');
 var path = require('path');
 var logger = require('morgan');
 var passport = require('passport');
+const webpush = require("web-push");
 
 var app = express();
 app.use(cors());
@@ -71,14 +72,14 @@ db.sequelize.sync({force: false, alert: true}).then(() => {
 
 app.listen(port, () => console.log(port));
 
-// Push Notification //
+///////////////////////Push Notification //
 // Creating express app and configuring middleware needed for authentication
-const app = express();
+//const app = express();
 
 // Set static path
 //app.use(express.static(path.join(__dirname, "../frontend")));
 
-app.use(bodyParser.json());
+app.use(bodyparser.json());
 
 const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
 const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
