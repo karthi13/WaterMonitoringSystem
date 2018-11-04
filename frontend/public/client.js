@@ -2,7 +2,7 @@
 // const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
 ///////// Public  Key ////////////////////////////////////////////////////////////////////
 //PRIVATE_VAPID_KEY="4IPU7p8KvW5ZUOflDb-TNZp8GyojX4O8Btn_thFk5X8";
-const PUBLIC_VAPID_KEY= "BFSGOd7W_UObKJRIy0eXoqIKWkYpkM7imDBtE_Ds5aeE5f4LNw2h7yUQO9R5xQqDyfaNu_hf7kzzKhlCZrG_QZQ";
+const publicVapidKey= "BFSGOd7W_UObKJRIy0eXoqIKWkYpkM7imDBtE_Ds5aeE5f4LNw2h7yUQO9R5xQqDyfaNu_hf7kzzKhlCZrG_QZQ";
 /////////////////////////////////////////////////////////////////////////////////////
 
 // import axios from "axios"
