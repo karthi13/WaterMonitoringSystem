@@ -1,27 +1,27 @@
-// console.log("Service Worker Loaded...Hoooorrraaaayyy");
+console.log("Service Worker Loaded...Hoooorrraaaayyy");
 
-// window.addEventListener("push", e => {
-//   const data = e.data.json();
-//   console.log("Push Recieved...");
-//   self.registration.showNotification(data.title, {
-//     body: "You Are Wasting Water!"//, or get the body from data.body from server
-//    // icon: "../public/images/notificationIcon.png"
-//   });
-//   //event.waitUntil(self.registration.showNotification(title, body))
+window.addEventListener("push", e => {
+  const data = e.data.json();
+  console.log("Push Recieved...");
+  self.registration.showNotification(data.title, {
+    body: "You Are Wasting Water!"//, or get the body from data.body from server
+   // icon: "../public/images/notificationIcon.png"
+  });
+  //event.waitUntil(self.registration.showNotification(title, body))
 
-// });
+});
 
-// // self.addEventListener("push", event => {
-// //   const data = event.data.json()
-// //   const { title } = data
+// self.addEventListener("push", event => {
+//   const data = event.data.json()
+//   const { title } = data
 
-// //   const body = {
-// //     body: data.body,
-// //     icon: data.icon
-// //   }
+//   const body = {
+//     body: data.body,
+//     icon: data.icon
+//   }
 
-// //   event.waitUntil(self.registration.showNotification(title, body))
-// // })
+//   event.waitUntil(self.registration.showNotification(title, body))
+// })
 
 
 // const publicVapidKey =process.env.PUBLIC_VAPID_KEY;

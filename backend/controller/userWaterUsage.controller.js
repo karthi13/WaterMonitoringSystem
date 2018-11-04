@@ -25,7 +25,7 @@ exports.waterUsed = (req, res) => {
 
 exports.findWaterUsageToday = (req, res) => {
     var date = new Date();
-    console.log(date); 
+    console.log(date);
 
     WaterUsage.findAll({
         where: {
@@ -44,7 +44,7 @@ exports.findWaterUsageToday = (req, res) => {
     }).then(usage_by_hour => {
 
 
-        let sum = usage_by_hour.map( el => el.water_used ).reduce(( accumulator, currentValue)=>{
+        let sum = usage_by_hour.map(el => el.water_used).reduce((accumulator, currentValue) => {
             return accumulator + currentValue;
         })
 
@@ -53,28 +53,41 @@ exports.findWaterUsageToday = (req, res) => {
             water_exceeded: (sum - 100) > 0 ? (sum - 100) : 0,
             water_remaining: (100 - sum) > 0 ? (100 - sum) : 0,
             usage_by_hour
-       }
+        }
 
         res.json({
-            message : "Water Usage Today",
-            data            
+            message: "Water Usage Today",
+            data
         });
 
 
-        var percent=85; //frm db 
+        // const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
+        // const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
+        ///////// Keys ////////////////////////////////////////////////////////////////////
+        PRIVATE_VAPID_KEY = "4IPU7p8KvW5ZUOflDb-TNZp8GyojX4O8Btn_thFk5X8"
+        PUBLIC_VAPID_KEY = "BFSGOd7W_UObKJRIy0eXoqIKWkYpkM7imDBtE_Ds5aeE5f4LNw2h7yUQO9R5xQqDyfaNu_hf7kzzKhlCZrG_QZQ"
+        /////////////////////////////////////////////////////////////////////////////////////
+
+        webpush.setVapidDetails(
+            "mailto:water@water_reporter.com",
+            publicVapidKey,
+            privateVapidKey
+        );
+
+        var percent = 85; //frm db 
         // Create payload
-        const payload = JSON.stringify({ 
-          title: "Water Usage Alert" ,
-          body: "Your Water Usage Exceeded "+ percent+"%",
-          //icon: follower.photoURL
+        const payload = JSON.stringify({
+            title: "Water Usage Alert",
+            body: "Your Water Usage Exceeded " + percent + "%",
+            //icon: follower.photoURL
         });
-      
+
         pushIntervalID = setInterval(() => {
-        // Pass object into sendNotification
-        webpush
-          .sendNotification(subscription, payload)
-          //.catch(err => console.error(err));
-          .catch(() => clearInterval(pushIntervalID))
+            // Pass object into sendNotification
+            webpush
+                .sendNotification(subscription, payload)
+                //.catch(err => console.error(err));
+                .catch(() => clearInterval(pushIntervalID))
         }, 3000)
     })
 
@@ -85,8 +98,8 @@ exports.findWaterUsageMonth = (req, res) => {
     moment().format();
 
     var date = new Date();
-    var firstDay = new Date(date.getFullYear(), date.getMonth(), 0,24,59,59);
-    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0,24,59,59);
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 0, 24, 59, 59);
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0, 24, 59, 59);
 
     // var month = moment().month() + 1;
     // var year = moment().year();
@@ -105,16 +118,16 @@ exports.findWaterUsageMonth = (req, res) => {
             [Sequelize.literal('SUM(water_used)'), 'water_used'],
             [Sequelize.fn('DAY', Sequelize.col('created_at')), 'DAY'],
         ],
-        group: ['DATE', 'DAY' ]
+        group: ['DATE', 'DAY']
     }).then(val => {
         console.log("The total water usage " + val);
 
         let totalWaterExceeded = 0;
         let totalWaterUnUsed = 0;
 
-        let monthData = val.map( el => el.water_used ).reduce(( accumulator, currentValue)=>{
+        let monthData = val.map(el => el.water_used).reduce((accumulator, currentValue) => {
             console.log("toatal water un used = ", totalWaterUnUsed);
-            ((100 - currentValue) > 0 ) ? totalWaterUnUsed +=  (100 - currentValue) : totalWaterExceeded =+ ((-1) * (100 - currentValue));
+            ((100 - currentValue) > 0) ? totalWaterUnUsed += (100 - currentValue) : totalWaterExceeded = + ((-1) * (100 - currentValue));
             return accumulator + currentValue;
         })
 
@@ -122,8 +135,8 @@ exports.findWaterUsageMonth = (req, res) => {
             monthData,
             water_exceeded: totalWaterExceeded,
             water_remaining: totalWaterUnUsed,
-            usage_by_date : val
-       }
+            usage_by_date: val
+        }
 
         res.json({
             message: "Total water usage this month",
@@ -158,8 +171,8 @@ exports.findWaterUsageYear = (req, res) => {
     // })
 
     var date = new Date();
-    var firstDay = new Date(date.getFullYear(), 0, 0,24,59,59);
-    var lastDay = new Date(date.getFullYear()+1, 0, 0,24,59,59);
+    var firstDay = new Date(date.getFullYear(), 0, 0, 24, 59, 59);
+    var lastDay = new Date(date.getFullYear() + 1, 0, 0, 24, 59, 59);
 
     // var month = moment().month() + 1;
     // var year = moment().year();
@@ -185,9 +198,9 @@ exports.findWaterUsageYear = (req, res) => {
         let totalWaterUnUsed = 0;
         // let 
 
-        let monthData = val.map( el => el.water_used ).reduce(( accumulator, currentValue)=>{
+        let monthData = val.map(el => el.water_used).reduce((accumulator, currentValue) => {
             console.log("toatal water un used = ", totalWaterUnUsed);
-            ((100 - currentValue) > 0 ) ? totalWaterUnUsed +=  (100 - currentValue) : totalWaterExceeded =+ ((-1) * (100 - currentValue));
+            ((100 - currentValue) > 0) ? totalWaterUnUsed += (100 - currentValue) : totalWaterExceeded = + ((-1) * (100 - currentValue));
             return accumulator + currentValue;
         })
 
@@ -195,8 +208,8 @@ exports.findWaterUsageYear = (req, res) => {
             monthData,
             water_exceeded: totalWaterExceeded,
             water_remaining: totalWaterUnUsed,
-            usage_by_date : val
-       }
+            usage_by_date: val
+        }
 
         res.json({
             message: "Total water usage this month",

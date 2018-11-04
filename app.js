@@ -81,15 +81,18 @@ app.listen(port, () => console.log(port));
 
 app.use(bodyparser.json());
 
-///// KEYS /////
-//const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
-//const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
+// const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
+// const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
+///////// Keys ////////////////////////////////////////////////////////////////////
+PRIVATE_VAPID_KEY="4IPU7p8KvW5ZUOflDb-TNZp8GyojX4O8Btn_thFk5X8"
+PUBLIC_VAPID_KEY= "BFSGOd7W_UObKJRIy0eXoqIKWkYpkM7imDBtE_Ds5aeE5f4LNw2h7yUQO9R5xQqDyfaNu_hf7kzzKhlCZrG_QZQ"
+/////////////////////////////////////////////////////////////////////////////////////
 
-// webpush.setVapidDetails(
-//   "mailto:water@water_reporter.com",
-//   publicVapidKey,
-//   privateVapidKey
-// );
+webpush.setVapidDetails(
+  "mailto:water@water_reporter.com",
+  publicVapidKey,
+  privateVapidKey
+);
 
 // Subscribe Route .. This shall be called only if a trigger happened in DB 
 app.post("/subscribe", (req, res, next) => {
