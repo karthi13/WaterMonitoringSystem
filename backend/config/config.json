@@ -1,10 +1,10 @@
 
 {
   "development": {
-    "username": "b7deb686678fbd",
-    "password": "2c4489f0",
-    "database": "gcp_d93ac7346ad1dbf83ad7",
-    "host": "cryptic-wildwood-24739.herokuapp.com",
+    "username": "bb8235630d8072",
+    "password": "f998c7cb",
+    "database": "heroku_e726e8b0d4fa5f8",
+    "host": "us-cdbr-iron-east-01.cleardb.net",
     "port": "22",
     "dialect": "mysql",
     "pool": {
@@ -28,10 +28,10 @@
     }
   },
   "production": {
-    "username": "b7deb686678fbd",
-    "password": "2c4489f0",
-    "database": "gcp_d93ac7346ad1dbf83ad7",
-    "host": "cryptic-wildwood-24739.herokuapp.com",
+    "username": "bb8235630d8072",
+    "password": "f998c7cb",
+    "database": "heroku_e726e8b0d4fa5f8",
+    "host": "us-cdbr-iron-east-01.cleardb.net",
     "port": "22",
     "dialect": "mysql",
     "pool": {
