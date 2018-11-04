@@ -42,14 +42,14 @@ class HeaderComponent extends Component {
                     {!this.state.isWideEnough && <NavbarToggler onClick={this.onClick} />}
                     <Collapse isOpen={this.state.collapse} navbar>
                         <NavbarNav left>
-                            <NavItem active>
-                                <NavLink to="#">Home</NavLink>
+                            <NavItem  selected>
+                                <NavLink exact to="/home">Home</NavLink>
                             </NavItem>
                             {/* <NavItem>
                                 <NavLink to="#">Features</NavLink>
                             </NavItem> */}
-                            <NavItem>
-                                <NavLink to="/payments">Payments</NavLink>
+                            <NavItem selected>
+                                <NavLink exact to="/payments">Payments</NavLink>
                             </NavItem>
                         </NavbarNav>
                         <NavbarNav right>
@@ -59,13 +59,13 @@ class HeaderComponent extends Component {
                                     <DropdownToggle nav>
                                         <img src="images/notificationIcon.png" height="30" />
                                     </DropdownToggle>
-                                    <DropdownMenu right style={{ right: 'auto' }}>
-                                        {/* <DropdownItem href="#">My Account</DropdownItem>
+                                    {/* <DropdownMenu right style={{ right: 'auto' }}>
+                                        <DropdownItem href="#">My Account</DropdownItem>
                                         <DropdownItem href="#">Logout</DropdownItem>
                                         <DropdownItem href="#">Another Action</DropdownItem>
-                                        <DropdownItem href="#">Something else here</DropdownItem> */}
                                         <DropdownItem href="#">Something else here</DropdownItem>
-                                    </DropdownMenu>
+                                        <DropdownItem href="#">Something else here</DropdownItem>
+                                    </DropdownMenu> */}
                                 </Dropdown>
                         </NavItem>
 
