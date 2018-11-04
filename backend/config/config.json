@@ -1,10 +1,10 @@
 
 {
   "development": {
-    "username": "waterman_root",
-    "password": "Dadadahahaha",
-    "database": "waterman_water_reporter",
-    "host": "localhost",
+    "username": "b7deb686678fbd",
+    "password": "2c4489f0",
+    "database": "gcp_d93ac7346ad1dbf83ad7",
+    "host": "cryptic-wildwood-24739.herokuapp.com",
     "port": "22",
     "dialect": "mysql",
     "pool": {
