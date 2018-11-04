@@ -1,4 +1,4 @@
-const publicVapidKey =process.env.PUBLIC_VAPID_KEY;
+//const publicVapidKey =process.env.PUBLIC_VAPID_KEY;
 
 // import axios from "axios"
 // export default function subscribePush() {
@@ -35,8 +35,8 @@ async function send() {
   // Register Push
   console.log("Registering Push...");
   const subscription = await register.pushManager.subscribe({
-    userVisibleOnly: true,//Always display notifications
-    applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
+    userVisibleOnly: true //,Always display notifications
+    //applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
   });
   console.log("Push Registered...");
 
