@@ -5,7 +5,7 @@
     "password": "Dadadahahaha",
     "database": "waterman_water_reporter",
     "host": "103.194.169.92",
-    "port": "3306",
+    "port": "22",
     "dialect": "mysql",
     "pool": {
       "max": 5,
