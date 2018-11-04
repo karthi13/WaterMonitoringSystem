@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 const db = require('./backend/config/db.config.js');
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 require('./backend/config/passport.js')(passport, db.user);
 require('./backend/routes/main.route.js')(app,passport);
 require('./backend/Services/passportStrategy')(passport);
