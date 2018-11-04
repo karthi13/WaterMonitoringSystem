@@ -1,10 +1,10 @@
 
 {
   "development": {
-    "username": "waterman_root",
-    "password": "Dadadahahaha",
-    "database": "waterman_water_reporter",
-    "host": "103.194.169.92",
+    "username": "root",
+    "password": "",
+    "database": "water_reporter",
+    "host": "127.0.0.1",
     "dialect": "mysql",
     "pool": {
       "max": 5,
