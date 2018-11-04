@@ -56,7 +56,7 @@ exports.findWaterUsageToday = (req, res) => {
        }
 
         res.json({
-            message : "Succesfull data acquired",
+            message : "Water Usage Today",
             data            
         });
 
