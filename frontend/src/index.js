@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/react-vis/dist/style.css';
+import '../node_modules/react-toastify/dist/ReactToastify.css';
 
 const app = (
         <BrowserRouter>
-            <App/>
+            <Switch>
+                <App/>
+            </Switch>
         </BrowserRouter>
 )
 

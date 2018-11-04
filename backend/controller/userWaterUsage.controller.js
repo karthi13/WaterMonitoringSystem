@@ -2,7 +2,7 @@
 const db = require('../config/db.config.js');
 var Sequelize = require('sequelize');
 var moment = require('moment');
-
+const webpush = require("web-push");
 
 const Op = Sequelize.Op;
 
@@ -59,6 +59,23 @@ exports.findWaterUsageToday = (req, res) => {
             message : "Succesfull data acquired",
             data            
         });
+
+
+        var percent=85; //frm db 
+        // Create payload
+        const payload = JSON.stringify({ 
+          title: "Water Usage Alert" ,
+          body: "Your Water Usage Exceeded "+ percent+"%",
+          //icon: follower.photoURL
+        });
+      
+        pushIntervalID = setInterval(() => {
+        // Pass object into sendNotification
+        webpush
+          .sendNotification(subscription, payload)
+          //.catch(err => console.error(err));
+          .catch(() => clearInterval(pushIntervalID))
+        }, 3000)
     })
 
 

@@ -72,7 +72,7 @@ class Chart extends Component {
                                 <Row>
                                     <Col sm="5">
                                         <CardTitle className="mb-0">Water Usage</CardTitle>
-                                        <div className="small text-muted">November 2015</div>
+                                        <div className="small text-muted">November 2018</div>
                                     </Col>
                                 </Row>
                                 <div className="chart-wrapper" style={{ height: 300 + 'px', marginTop: 40 + 'px' }}>
@@ -87,7 +87,7 @@ class Chart extends Component {
                                 <Row>
                                     <Col sm="5">
                                         <CardTitle className="mb-0">Water Usage</CardTitle>
-                                        <div className="small text-muted">November 2015</div>
+                                        <div className="small text-muted">November 201</div>
                                     </Col>
                                 </Row>
                                 <div className="chart-wrapper" style={{ height: 300 + 'px', marginTop: 40 + 'px' }}>

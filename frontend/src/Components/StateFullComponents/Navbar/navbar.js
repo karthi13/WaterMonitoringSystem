@@ -3,7 +3,7 @@ import { Navbar, NavItem } from 'react-bootstrap';
 import HeaderComponent  from '../../containers/DefaultLayout/HeaderComponent';
 import ButtonGroupComponent  from '../../StateFullComponents/ButtonGroup/buttonGroupComponent';
 import Chart from '../chartComponents/realtimeLineChart';
-
+import { toast, ToastContainer } from 'react-toastify';
 import { Button, ButtonGroup } from 'reactstrap';
 import './navbar.css';
 
@@ -31,7 +31,20 @@ class NavbarComponent extends Component {
         this.getChartData = this.getChartData.bind(this);
         this.getChartDataMonth = this.getChartDataMonth.bind(this);
         this.getChartDataYear = this.getChartDataYear.bind(this);
+        this.notify = this.notify.bind(this)
       
+    }
+
+    notify = (toToast) => {
+      console.log("notification pressed");
+      toast(toToast, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+        });
     }
 
 
@@ -43,6 +56,12 @@ class NavbarComponent extends Component {
           }).then(( res )=> {
             console.log(res)
             let pieData = [ res.data.data.sum,  res.data.data.water_remaining, res.data.data.water_exceeded]
+
+            // res.data.data.sum === 85 || res.data.data.sum === 90 || 
+              // res.data.data.sum === 95 || res.data.data.sum === 138
+            if(true ){
+                this.notify(`The water consumption has reached ${res.data.data.sum} liters `)
+            }
 
             let doughnutData = {
               labels: [ 'Water limit Used','Water limit Left','Water limit exceeded'],
@@ -74,6 +93,7 @@ class NavbarComponent extends Component {
               barChartData
             })
           });
+          this.notify();
     }
 
     getChartDataMonth = () => {
@@ -198,7 +218,8 @@ class NavbarComponent extends Component {
                     <Button active onClick={e => this.getChartDataMonth()}>Month</Button>
                     <Button active onClick={e => this.getChartDataYear()}>Year</Button>
                 </ButtonGroup>
-                <Chart chartData={this.state}/>  
+                <Chart chartData={this.state}/> 
+                <ToastContainer/>
             </div>
         );
     }
