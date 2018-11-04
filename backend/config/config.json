@@ -4,7 +4,7 @@
     "username": "waterman_root",
     "password": "Dadadahahaha",
     "database": "waterman_water_reporter",
-    "host": "103.194.169.92",
+    "host": "localhost",
     "port": "22",
     "dialect": "mysql",
     "pool": {
