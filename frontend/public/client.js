@@ -1,5 +1,23 @@
 const publicVapidKey =process.env.PUBLIC_VAPID_KEY;
 
+// import axios from "axios"
+// export default function subscribePush() {
+//   navigator.serviceWorker.ready.then(registration => {
+//     if (!registration.pushManager) {
+//       alert("Push Unsupported")
+//       return
+//     }
+    
+//     registration.pushManager
+//       .subscribe({
+//         userVisibleOnly: true, //Always display notifications
+//         applicationServerKey: convertedVapidKey
+//       })
+//       .then(subscription => axios.post("/api/push/register", subscription))
+//       .catch(err => console.error("Push subscription error: ", err))
+//   })
+// }
+
 // Check for service worker
 if ("serviceWorker" in navigator) {
   send().catch(err => console.error(err));
@@ -17,7 +35,7 @@ async function send() {
   // Register Push
   console.log("Registering Push...");
   const subscription = await register.pushManager.subscribe({
-    userVisibleOnly: true,
+    userVisibleOnly: true,//Always display notifications
     applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
   });
   console.log("Push Registered...");
