@@ -49,7 +49,7 @@ class NavbarComponent extends Component {
 
 
     getChartData = () => {
-      axios.get('http://localhost:4000/api/getUsageToday', {
+      axios.get('http://'+process.env.HOSTNAME+':'+process.env.PORT+'/api/getUsageToday', {
             params: {
               user_id: this.props.location.state.userData.user_id
             }
@@ -97,7 +97,7 @@ class NavbarComponent extends Component {
     }
 
     getChartDataMonth = () => {
-      axios.get('http://localhost:4000/api/getUsageMonth', {
+      axios.get('http://'+process.env.HOSTNAME+':'+process.env.PORT+'/api/getUsageMonth', {
             params: {
               user_id: this.props.location.state.userData.user_id
             }
@@ -140,7 +140,7 @@ class NavbarComponent extends Component {
     getChartDataYear = () => {
 
       console.log("Year called");
-      axios.get('http://localhost:4000/api/getUsageYear', {
+      axios.get('http://'+process.env.HOSTNAME+':'+process.env.PORT+'/api/getUsageYear', {
             params: {
               user_id: this.props.location.state.userData.user_id
             }
@@ -200,7 +200,7 @@ class NavbarComponent extends Component {
             user_id: this.props.location.state.userData.user_id,
             water_used : Math.random().toFixed(4)
           }
-          axios.post('http://localhost:4000/api/storeWaterUsed', data)
+          axios.post('http://'+process.env.HOSTNAME+':'+process.env.PORT+'/api/storeWaterUsed', data)
           .then(( res )=> console.log( res ));
 
           this.getChartData();

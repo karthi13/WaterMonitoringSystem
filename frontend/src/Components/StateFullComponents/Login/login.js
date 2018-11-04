@@ -26,7 +26,7 @@ class LoginPage extends React.Component {
         }
 
         event.preventDefault();
-        axios.post('http://localhost:4000/api/login', data)
+        axios.post('http://'+process.env.HOSTNAME+':'+process.env.PORT+'/api/login', data)
           .then((response) => {
             console.log(response);
             if(response.data.success === true){

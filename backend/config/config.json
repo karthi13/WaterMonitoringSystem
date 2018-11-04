@@ -5,6 +5,7 @@
     "password": "1234",
     "database": "water_reporter",
     "host": "127.0.0.1",
+    "port": "22",
     "dialect": "mysql",
     "pool": {
       "max": 5,
@@ -27,10 +28,10 @@
     }
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "water_reporter",
-    "host": "127.0.0.1",
+    "username": "waterman_root",
+    "password": "Dadadahahaha",
+    "database": "waterman_water_reporter",
+    "host": "103.194.169.92",
     "dialect": "mysql",
     "pool": {
       "max": 5,
