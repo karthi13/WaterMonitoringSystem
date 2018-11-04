@@ -3,6 +3,8 @@ import { Navbar, NavItem } from 'react-bootstrap';
 import HeaderComponent  from '../../containers/DefaultLayout/HeaderComponent';
 import ButtonGroupComponent  from '../../StateFullComponents/ButtonGroup/buttonGroupComponent';
 import Chart from '../chartComponents/realtimeLineChart';
+
+import { Button, ButtonGroup } from 'reactstrap';
 import './navbar.css';
 
 
@@ -24,9 +26,16 @@ class NavbarComponent extends Component {
               }]
           },
           barChartData: []
-        }
+        };
+        this.onButtonClickHandler = this.onButtonClickHandler.bind(this);
+        this.getChartData = this.getChartData.bind(this);
+        this.getChartDataMonth = this.getChartDataMonth.bind(this);
+        this.getChartDataYear = this.getChartDataYear.bind(this);
+      
     }
-    componentWillMount(){
+
+
+    getChartData = () => {
       axios.get('http://localhost:4000/api/getUsageToday', {
             params: {
               user_id: this.props.location.state.userData.user_id
@@ -66,6 +75,100 @@ class NavbarComponent extends Component {
             })
           });
     }
+
+    getChartDataMonth = () => {
+      axios.get('http://localhost:4000/api/getUsageMonth', {
+            params: {
+              user_id: this.props.location.state.userData.user_id
+            }
+          }).then(( res )=> {
+            console.log(res)
+            let pieData = [ res.data.data.monthData,  res.data.data.water_remaining, res.data.data.water_exceeded]
+
+            let doughnutData = {
+              labels: [ 'Water limit Used','Water limit Left','Water limit exceeded'],
+              datasets: [
+                {
+                  data: pieData,
+                  backgroundColor: [ '#FF6384', '#36A2EB', '#FFCE56' ],
+                  hoverBackgroundColor: [ '#FF6384', '#36A2EB', '#FFCE56' ],
+                }]
+            }
+
+            let barChartData = [];
+            let usageByDate = [...res.data.data.usage_by_date];
+            for (let i = 0; i < 31; i++) { 
+              for (let j = 0; j < usageByDate.length; j++){
+                if( (i+1) === usageByDate[j].DAY){
+                  barChartData.push({
+                    x : usageByDate[j].DAY,
+                    y : usageByDate[j].water_used
+                  });
+                }
+              }
+              if( barChartData.length === i)
+                barChartData.push({ x : i+1, y : 0});
+            }
+
+            this.setState({
+              chartData : doughnutData,
+              barChartData
+            })
+          });
+    }
+
+    getChartDataYear = () => {
+
+      console.log("Year called");
+      axios.get('http://localhost:4000/api/getUsageYear', {
+            params: {
+              user_id: this.props.location.state.userData.user_id
+            }
+          }).then(( res )=> {
+            console.log(res)
+            let pieData = [ res.data.data.monthData,  res.data.data.water_remaining, res.data.data.water_exceeded]
+
+            let doughnutData = {
+              labels: [ 'Water limit Used','Water limit Left','Water limit exceeded'],
+              datasets: [
+                {
+                  data: pieData,
+                  backgroundColor: [ '#FF6384', '#36A2EB', '#FFCE56' ],
+                  hoverBackgroundColor: [ '#FF6384', '#36A2EB', '#FFCE56' ],
+                }]
+            }
+
+            let barChartData = [];
+            let usageByDate = [...res.data.data.usage_by_date];
+            for (let i = 0; i < 12; i++) { 
+              for (let j = 0; j < usageByDate.length; j++){
+                if( (i+1) === usageByDate[j].MONTH){
+                  barChartData.push({
+                    x : usageByDate[j].MONTH,
+                    y : usageByDate[j].water_used
+                  });
+                }
+              }
+              if( barChartData.length === i)
+                barChartData.push({ x : i+1, y : 0});
+            }
+
+            this.setState({
+              chartData : doughnutData,
+              barChartData
+            })
+          });
+    }
+
+    onButtonClickHandler = (event, queryString) => {
+      event.preventDefault();
+      console.log(queryString);
+    }
+
+    componentWillMount(){
+      this.getChartData();
+    }
+
     componentDidMount() {
       
       setInterval(() => { 
@@ -80,44 +183,7 @@ class NavbarComponent extends Component {
           axios.post('http://localhost:4000/api/storeWaterUsed', data)
           .then(( res )=> console.log( res ));
 
-          axios.get('http://localhost:4000/api/getUsageToday', {
-            params: {
-              user_id: this.props.location.state.userData.user_id
-            }
-          }).then(( res )=> {
-            console.log(res)
-            let pieData = [ res.data.data.sum,  res.data.data.water_remaining, res.data.data.water_exceeded]
-
-            let doughnutData = {
-              labels: [ 'Water limit Used','Water limit Left','Water limit exceeded'],
-              datasets: [
-                {
-                  data: pieData,
-                  backgroundColor: [ '#FF6384', '#36A2EB', '#FFCE56' ],
-                  hoverBackgroundColor: [ '#FF6384', '#36A2EB', '#FFCE56' ],
-                }]
-            }
-
-            let barChartData = [];
-            let usageBYHour = [...res.data.data.usage_by_hour];
-            for (let i = 0; i < 24; i++) { 
-              for (let j = 0; j < usageBYHour.length; j++){
-                if( i === usageBYHour[j].hour){
-                  barChartData.push({
-                    x : i,
-                    y : usageBYHour[j].water_used
-                  });
-                }
-              }
-              if( barChartData.length === i)
-                barChartData.push({ x : i, y : 0});
-            }
-
-            this.setState({
-              chartData : doughnutData,
-              barChartData
-            })
-          });
+          this.getChartData();
         }
 
       }, 30000);
@@ -127,7 +193,11 @@ class NavbarComponent extends Component {
         return (
             <div className="max-width" >
                 <HeaderComponent/>
-                <ButtonGroupComponent/>
+                <ButtonGroup>
+                    <Button active onClick={e => this.getChartData()}>Day</Button>
+                    <Button active onClick={e => this.getChartDataMonth()}>Month</Button>
+                    <Button active onClick={e => this.getChartDataYear()}>Year</Button>
+                </ButtonGroup>
                 <Chart chartData={this.state}/>  
             </div>
         );

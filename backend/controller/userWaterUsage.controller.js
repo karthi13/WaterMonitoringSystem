@@ -23,53 +23,9 @@ exports.waterUsed = (req, res) => {
 
 }
 
-// FETCH usage of specific day
-// exports.find_water_usage_specific_date = (req, res) => {
-//     waterUsage.findAll({
-//         attributes: { include: [[sequelize.fn('COUNT', sequelize.col('water_used')), 'total_water_usage_for_day']] },
-//         where: {
-//             user_id: req.body.user_id,
-//             [Op.between]: [{ created_at: req.body.date }, { created_at: req.body.date }]
-//         }
-//     }).then(customers => {
-//         res.send(customers);
-//     });
-// };
-
 exports.findWaterUsageToday = (req, res) => {
     var date = new Date();
-    console.log(date);
-    // let dougnutData = WaterUsage.sum('water_used', {
-    //     where: {
-    //         user_id: req.query.user_id,
-    //         //[Op.between]: [{ created_at: req.body.date }, { created_at: req.body.date }]
-    //         //             sequelize.fn('date', sequelize.col('event_date')), 
-    //         //     '<=', '2016-10-10'
-    //         //   ),
-    //         created_at: {
-    //             [Op.gt]: new Date().setHours(1, 0, 0, 0),
-    //             [Op.lt]: new Date().setHours(24, 59, 59, 0)
-    //         }
-    //     }
-    //     // where: sequelize.where(sequelize.fn('char_length', sequelize.col('status')), 6)
-    // }).then(sum => {
-    //     console.log("The total water usage " + sum);
-
-
-    //     let data = {
-    //         sum,
-    //         water_exceeded: (sum - 100) > 0 ? (sum - 100) : 0,
-    //         water_remaining: (100 - sum) > 0 ? (100 - sum) : 0
-    //     }
-
-
-    //     res.json({
-    //         message : "Succesfull data acquired",
-    //         data          
-    //     });
-    // })
-
-    
+    console.log(date); 
 
     WaterUsage.findAll({
         where: {
@@ -81,7 +37,6 @@ exports.findWaterUsageToday = (req, res) => {
         },
         attributes: [
             [Sequelize.fn('hour', Sequelize.col('created_at')), 'hour'],
-            // [Sequelize.fn('sum', 'water_used'), 'water_used'],
             [Sequelize.literal('SUM(water_used)'), 'water_used']
         ],
         group: 'hour'
@@ -111,49 +66,125 @@ exports.findWaterUsageToday = (req, res) => {
 
 exports.findWaterUsageMonth = (req, res) => {
     moment().format();
-    var month = moment().month() + 1;
-    var year = moment().year();
-    WaterUsage.sum('water_used', {
+
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 0,24,59,59);
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0,24,59,59);
+
+    // var month = moment().month() + 1;
+    // var year = moment().year();
+    // WaterUsage.sum('water_used', {
+    WaterUsage.findAll({
         where: {
             user_id: req.query.user_id,
             //[Op.between]: [{ created_at: req.body.date }, { created_at: req.body.date }]
+            created_at: {
+                [Op.gt]: firstDay,
+                [Op.lt]: lastDay
+            }
+        },
+        attributes: [
+            [Sequelize.fn('DATE', Sequelize.col('created_at')), 'DATE'],
+            [Sequelize.literal('SUM(water_used)'), 'water_used'],
+            [Sequelize.fn('DAY', Sequelize.col('created_at')), 'DAY'],
+        ],
+        group: ['DATE', 'DAY' ]
+    }).then(val => {
+        console.log("The total water usage " + val);
 
-            [Op.and]: [
-                Sequelize.where(Sequelize.fn('month', Sequelize.col("created_at")), month),
-                Sequelize.where(Sequelize.fn('year', Sequelize.col("created_at")), year)
-            ],
-        }
-    }).then(sum => {
-        console.log("The total water usage " + sum);
+        let totalWaterExceeded = 0;
+        let totalWaterUnUsed = 0;
+
+        let monthData = val.map( el => el.water_used ).reduce(( accumulator, currentValue)=>{
+            console.log("toatal water un used = ", totalWaterUnUsed);
+            ((100 - currentValue) > 0 ) ? totalWaterUnUsed +=  (100 - currentValue) : totalWaterExceeded =+ ((-1) * (100 - currentValue));
+            return accumulator + currentValue;
+        })
+
+        let data = {
+            monthData,
+            water_exceeded: totalWaterExceeded,
+            water_remaining: totalWaterUnUsed,
+            usage_by_date : val
+       }
 
         res.json({
             message: "Total water usage this month",
             success: true,
-            data: sum
+            data
         });
     })
 };
 
 exports.findWaterUsageYear = (req, res) => {
     moment().format();
-    var year = moment().year();
+    // var year = moment().year();
 
-    WaterUsage.sum('water_used', {
+    // WaterUsage.sum('water_used', {
+    //     where: {
+    //         user_id: req.query.user_id,
+    //         //[Op.between]: [{ created_at: req.body.date }, { created_at: req.body.date }]
+
+    //         [Op.and]: [
+    //             Sequelize.where(Sequelize.fn('year', Sequelize.col("created_at")), year)
+    //         ],
+
+    //     }
+    // }).then(sum => {
+    //     console.log("The total water usage " + sum);
+
+    //     res.json({
+    //         message: "Total water usage this year",
+    //         success: true,
+    //         data: sum
+    //     });
+    // })
+
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), 0, 0,24,59,59);
+    var lastDay = new Date(date.getFullYear()+1, 0, 0,24,59,59);
+
+    // var month = moment().month() + 1;
+    // var year = moment().year();
+    // WaterUsage.sum('water_used', {
+    WaterUsage.findAll({
         where: {
             user_id: req.query.user_id,
             //[Op.between]: [{ created_at: req.body.date }, { created_at: req.body.date }]
+            created_at: {
+                [Op.gt]: firstDay,
+                [Op.lt]: lastDay
+            }
+        },
+        attributes: [
+            [Sequelize.fn('MONTH', Sequelize.col('created_at')), 'MONTH'],
+            [Sequelize.literal('SUM(water_used)'), 'water_used']
+        ],
+        group: 'MONTH'
+    }).then(val => {
+        console.log("The total water usage " + val);
 
-            [Op.and]: [
-                Sequelize.where(Sequelize.fn('year', Sequelize.col("created_at")), year)
-            ],
-        }
-    }).then(sum => {
-        console.log("The total water usage " + sum);
+        let totalWaterExceeded = 0;
+        let totalWaterUnUsed = 0;
+        // let 
+
+        let monthData = val.map( el => el.water_used ).reduce(( accumulator, currentValue)=>{
+            console.log("toatal water un used = ", totalWaterUnUsed);
+            ((100 - currentValue) > 0 ) ? totalWaterUnUsed +=  (100 - currentValue) : totalWaterExceeded =+ ((-1) * (100 - currentValue));
+            return accumulator + currentValue;
+        })
+
+        let data = {
+            monthData,
+            water_exceeded: totalWaterExceeded,
+            water_remaining: totalWaterUnUsed,
+            usage_by_date : val
+       }
 
         res.json({
-            message: "Total water usage this year",
+            message: "Total water usage this month",
             success: true,
-            data: sum
+            data
         });
     })
 };
