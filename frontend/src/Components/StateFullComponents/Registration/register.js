@@ -26,7 +26,7 @@ export default class RegistrationPage extends React.Component {
   }
 
   componentDidMount(prevProps, prevState){
-    axios.get('http://localhost:4000/api/getMunicipalites').then( response => {
+    axios.get('http://'+process.env.HOSTNAME+':'+process.env.PORT+'/api/getMunicipalites').then( response => {
       console.log(response);
       if (this.state.municipalities.length === 0) {
         let municipalities = response.data.municipalities.map( municipality => {
@@ -58,7 +58,7 @@ export default class RegistrationPage extends React.Component {
 			postcode:this.state.postcode,
       locality_id : "714fe24b-d253-4077-974a-7ee69da60018",
     }
-    axios.post('http://localhost:4000/api/registerUser', data)
+    axios.post('http://'+process.env.HOSTNAME+':'+process.env.PORT+'/api/registerUser', data)
       .then((response) => {
         
         if(response.status === 200 ){
