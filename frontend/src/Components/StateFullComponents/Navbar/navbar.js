@@ -214,7 +214,7 @@ class NavbarComponent extends Component {
         this.getChartData();
       }
 
-    }, 30000);
+    }, 500000);
   }
 
   render() {
