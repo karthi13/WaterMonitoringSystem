@@ -47,10 +47,11 @@ class HeaderComponent extends Component {
                             </NavItem>
                             {/* <NavItem>
                                 <NavLink to="#">Features</NavLink>
-                            </NavItem> */}
+                            </NavItem> 
                             <NavItem selected>
                                 <NavLink exact to="/payments">Payments</NavLink>
                             </NavItem>
+                            */}
                         </NavbarNav>
                         <NavbarNav right>
                         <NavItem>
