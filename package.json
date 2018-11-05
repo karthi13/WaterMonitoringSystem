@@ -2,6 +2,8 @@
   "name": "water-monitoring-system",
   "version": "0.0.0",
   "private": true,
+  "main": "/frontend/src/index.js",
+
   "scripts": {
     "start": "node ./bin/www",
     "server": "nodemon app.js",
