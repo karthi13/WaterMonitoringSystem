@@ -34,7 +34,7 @@ require('./backend/Services/passportStrategy')(passport);
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
-  res.send('I am index file from client !!');
+  res.send('The page is not available');
 });
 
 // app.get('/', function(req, res) {
