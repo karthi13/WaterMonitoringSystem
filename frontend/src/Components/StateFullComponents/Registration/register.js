@@ -26,7 +26,7 @@ export default class RegistrationPage extends React.Component {
   }
 
   componentDidMount(prevProps, prevState) {
-    var HOSTNAME = 'cryptic-wildwood-24739.herokuapp.com';
+    var HOSTNAME = 'localhost';
     var PORT = 4000;
     axios.get('http://' + HOSTNAME + ':' + PORT + '/api/getMunicipalites').then(response => {
       console.log(response);
@@ -60,7 +60,7 @@ export default class RegistrationPage extends React.Component {
       postcode: this.state.postcode,
       locality_id: "714fe24b-d253-4077-974a-7ee69da60018",
     }
-    var HOSTNAME = 'cryptic-wildwood-24739.herokuapp.com';
+    var HOSTNAME = 'localhost';
     var PORT = 4000;
     axios.post('http://' + HOSTNAME + ':' + PORT + '/api/registerUser', data)
       .then((response) => {

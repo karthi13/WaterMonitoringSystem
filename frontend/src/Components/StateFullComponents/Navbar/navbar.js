@@ -49,7 +49,7 @@ class NavbarComponent extends Component {
 
 
   getChartData = () => {
-    var HOSTNAME = 'cryptic-wildwood-24739.herokuapp.com';
+    var HOSTNAME = 'localhost';
     var PORT = 4000;
     axios.get('http://' + HOSTNAME + ':' + PORT + '/api/getUsageToday', {
       params: {
@@ -99,7 +99,7 @@ class NavbarComponent extends Component {
   }
 
   getChartDataMonth = () => {
-    var HOSTNAME = 'cryptic-wildwood-24739.herokuapp.com';
+    var HOSTNAME = 'localhost';
     var PORT = 4000;
     axios.get('http://' + HOSTNAME + ':' + PORT + '/api/getUsageMonth', {
       params: {
@@ -143,7 +143,7 @@ class NavbarComponent extends Component {
 
   getChartDataYear = () => {
 
-    var HOSTNAME = 'cryptic-wildwood-24739.herokuapp.com';
+    var HOSTNAME = 'localhost';
     var PORT = 4000;
     console.log("Year called");
     axios.get('http://' + HOSTNAME + ':' + PORT + '/api/getUsageYear', {
@@ -206,7 +206,7 @@ class NavbarComponent extends Component {
           user_id: this.props.location.state.userData.user_id,
           water_used: Math.random().toFixed(4)
         }
-        var HOSTNAME = 'cryptic-wildwood-24739.herokuapp.com';
+        var HOSTNAME = 'localhost';
         var PORT = 4000;
         axios.post('http://' + HOSTNAME + ':' + PORT + '/api/storeWaterUsed', data)
           .then((res) => console.log(res));

@@ -1,11 +1,10 @@
 
 {
   "development": {
-    "username": "bb8235630d8072",
-    "password": "f998c7cb",
-    "database": "heroku_e726e8b0d4fa5f8",
-    "host": "us-cdbr-iron-east-01.cleardb.net",
-    "port": "22",
+    "username": "root",
+    "password": null,
+    "database": "water_reporter",
+    "host": "127.0.0.1",
     "dialect": "mysql",
     "pool": {
       "max": 5,

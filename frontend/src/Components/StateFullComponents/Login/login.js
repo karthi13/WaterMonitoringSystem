@@ -26,7 +26,7 @@ class LoginPage extends React.Component {
         }
 
         event.preventDefault();
-        var HOSTNAME = 'cryptic-wildwood-24739.herokuapp.com';
+        var HOSTNAME = 'localhost';
         var PORT = 4000;
         axios.post('http://' + HOSTNAME + ':' + PORT + '/api/login', data)
             .then((response) => {
