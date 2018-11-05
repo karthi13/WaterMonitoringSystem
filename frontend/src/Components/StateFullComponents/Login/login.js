@@ -62,7 +62,7 @@ class LoginPage extends React.Component {
 
         return (
             <div className="container">
-                <h1>Smart Water Monitoring System</h1>
+                <div className="project-title">Smart Water Monitoring System</div>
                 <div className="card card-container">
                     <img id="profile-img" className="profile-img-card" src="/images/userAvatar.png" />
                     <p id="profile-name" className="profile-name-card"></p>

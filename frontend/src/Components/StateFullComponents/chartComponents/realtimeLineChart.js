@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Row, Col, Card, CardBody, CardTitle } from 'reactstrap';
 import { Bar, Doughnut, Line, Pie, Polar, Radar } from 'react-chartjs-2';
 import './chart.css';
-import {VerticalBarSeries, XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis } from 'react-vis';
+import {FlexibleWidthXYPlot,VerticalBarSeries, XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis } from 'react-vis';
 class Chart extends Component {
     constructor(props) {
         super(props);
@@ -87,17 +87,17 @@ class Chart extends Component {
                                 <Row>
                                     <Col sm="5">
                                         <CardTitle className="mb-0">Water Usage</CardTitle>
-                                        <div className="small text-muted">November 201</div>
+                                        <div className="small text-muted">November 2018</div>
                                     </Col>
                                 </Row>
                                 <div className="chart-wrapper" style={{ height: 300 + 'px', marginTop: 40 + 'px' }}>
-                                    <XYPlot height={300} width={600}>
+                                    <FlexibleWidthXYPlot  height={300} >
                                         <VerticalGridLines />
                                         <HorizontalGridLines />
                                         <XAxis />
                                         <YAxis />
                                         <VerticalBarSeries data={this.props.chartData.barChartData} />
-                                    </XYPlot>
+                                    </FlexibleWidthXYPlot>
                                 </div>
                             </CardBody>
                         </Card>

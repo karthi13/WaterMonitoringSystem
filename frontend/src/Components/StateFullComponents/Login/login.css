@@ -149,6 +149,12 @@
     text-align: center !important;
 }
 
+.project-title{
+    text-align: center !important;
+    margin-top: 50px;
+    font-size: 30px !important
+}
+
 
 @media (min-width: 120px) and (max-width: 600px) {
     
