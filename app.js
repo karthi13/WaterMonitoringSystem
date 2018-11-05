@@ -93,47 +93,47 @@ app.use(bodyparser.json());
 // const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
 // const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
 ///////// Keys ////////////////////////////////////////////////////////////////////
-const privateVapidKey="4IPU7p8KvW5ZUOflDb-TNZp8GyojX4O8Btn_thFk5X8";
-const publicVapidKey= "BFSGOd7W_UObKJRIy0eXoqIKWkYpkM7imDBtE_Ds5aeE5f4LNw2h7yUQO9R5xQqDyfaNu_hf7kzzKhlCZrG_QZQ";
-/////////////////////////////////////////////////////////////////////////////////////
+// const privateVapidKey="4IPU7p8KvW5ZUOflDb-TNZp8GyojX4O8Btn_thFk5X8";
+// const publicVapidKey= "BFSGOd7W_UObKJRIy0eXoqIKWkYpkM7imDBtE_Ds5aeE5f4LNw2h7yUQO9R5xQqDyfaNu_hf7kzzKhlCZrG_QZQ";
+// /////////////////////////////////////////////////////////////////////////////////////
 
-webpush.setVapidDetails(
-  "mailto:water@water_reporter.com",
-  publicVapidKey,
-  privateVapidKey
-);
+// webpush.setVapidDetails(
+//   "mailto:water@water_reporter.com",
+//   publicVapidKey,
+//   privateVapidKey
+// );
 
-// Subscribe Route .. This shall be called only if a trigger happened in DB 
-app.post("/subscribe", (req, res, next) => {
-  // Get pushSubscription object
-  const subscription = req.body;
-  console.log(subscription)
+// // Subscribe Route .. This shall be called only if a trigger happened in DB 
+// app.post("/subscribe", (req, res, next) => {
+//   // Get pushSubscription object
+//   const subscription = req.body;
+//   console.log(subscription)
 
-  // Send 201 - resource created
-  res.status(201).json({});
+//   // Send 201 - resource created
+//   res.status(201).json({});
 
-  var percent=85; //frm db 
-  // Create payload
-  const payload = JSON.stringify({ 
-    title: "Water Usage Alert" ,
-    body: "Your Water Usage Exceeded "+ percent+"%",
-    //icon: follower.photoURL
-  });
+//   var percent=85; //frm db 
+//   // Create payload
+//   const payload = JSON.stringify({ 
+//     title: "Water Usage Alert" ,
+//     body: "Your Water Usage Exceeded "+ percent+"%",
+//     //icon: follower.photoURL
+//   });
 
-  pushIntervalID = setInterval(() => {
-  // Pass object into sendNotification
-  webpush
-    .sendNotification(subscription, payload)
-    //.catch(err => console.error(err));
-    .catch(() => clearInterval(pushIntervalID))
-  }, 30000)
-});
+//   pushIntervalID = setInterval(() => {
+//   // Pass object into sendNotification
+//   webpush
+//     .sendNotification(subscription, payload)
+//     //.catch(err => console.error(err));
+//     .catch(() => clearInterval(pushIntervalID))
+//   }, 30000)
+// });
 
 
-app.delete("/unsubscribe", (req, res, next) => {
-  subscription = null
-  clearInterval(pushIntervalID)
-  res.sendStatus(200)
-})
+// app.delete("/unsubscribe", (req, res, next) => {
+//   subscription = null
+//   clearInterval(pushIntervalID)
+//   res.sendStatus(200)
+// })
 
 module.exports = app;
