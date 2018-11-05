@@ -16,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public'))); 
+app.use(express.static(path.join(__dirname, '/frontend/build'))); 
 
 
 const db = require('./backend/config/db.config.js');
@@ -28,9 +29,17 @@ require('./backend/Services/passportStrategy')(passport);
 // var indexRouter = require('./backend/routes/index');
 // var usersRouter = require('./backend/routes/users');
 
-app.get('/', function(req, res) {
-  res.send('Nice meeting you wizard, I\'m deema!');
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+  res.send('I am index file from client !!');
 });
+
+// app.get('/', function(req, res) {
+//   res.send('Nice meeting you wizard, I\'m deema!');
+// });
 
 const port = process.env.PORT || 4000;
 
