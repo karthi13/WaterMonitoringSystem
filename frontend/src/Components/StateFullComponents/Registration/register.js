@@ -26,9 +26,9 @@ export default class RegistrationPage extends React.Component {
   }
 
   componentDidMount(prevProps, prevState){
-    var HOSTNAME='cryptic-wildwood-24739.herokuapp.com';
-        var PORT=4000;
-    axios.get('http://'+HOSTNAME+':'+PORT+'/api/getMunicipalites').then( response => {
+    //var HOSTNAME='cryptic-wildwood-24739.herokuapp.com';
+      //  var PORT=4000;
+    axios.get('/api/getMunicipalites').then( response => {
       console.log(response);
       if (this.state.municipalities.length === 0) {
         let municipalities = response.data.municipalities.map( municipality => {
@@ -60,9 +60,9 @@ export default class RegistrationPage extends React.Component {
 			postcode:this.state.postcode,
       locality_id : "714fe24b-d253-4077-974a-7ee69da60018",
     }
-    var HOSTNAME='cryptic-wildwood-24739.herokuapp.com';
-        var PORT=4000;
-    axios.post('http://'+HOSTNAME+':'+PORT+'/api/registerUser', data)
+    //var HOSTNAME='cryptic-wildwood-24739.herokuapp.com';
+    //    var PORT=4000;
+    axios.post('/api/registerUser', data)
       .then((response) => {
         
         if(response.status === 200 ){
