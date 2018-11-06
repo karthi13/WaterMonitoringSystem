@@ -61,7 +61,7 @@ class NavbarComponent extends Component {
 
       // res.data.data.sum === 85 || res.data.data.sum === 90 || 
       // res.data.data.sum === 95 || res.data.data.sum === 138
-      if (res.data.data.sum >= 45 ) {
+      if (true ) {
         this.notify(`The water consumption has reached ${res.data.data.sum} liters `)
       }
 
